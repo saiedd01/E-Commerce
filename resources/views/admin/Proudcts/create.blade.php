@@ -21,6 +21,10 @@
                 <input type="number" name="price" value="{{old("price")}}" placeholder="{{__("message.Product Price")}}" class="form-control"><br>
             </div>
             <div class="mb-1">
+                <label for="exampleFormControlInput1" class="form-label">Discount</label>
+                <input type="number" name="Discount" value="{{old("Discount")}}" placeholder="Discount Price" class="form-control"><br>
+            </div>
+            <div class="mb-1">
                 <label for="exampleFormControlInput1" class="form-label">{{__("message.Product Quantity")}}</label>
                 <input type="text" name="quantity" value="{{old("quantity")}}" placeholder="{{__("message.Product Quantity")}}" class="form-control"><br>
             </div>

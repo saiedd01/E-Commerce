@@ -6,6 +6,7 @@
     <thead>
         <td>{{__("message.Name")}}</td>
         <td>{{__("message.Price")}}</td>
+        <td>Discount</td>
         <td>{{__("message.Quantity")}}</td>
         <td>{{__("message.Image")}}</td>
         <td>{{__("message.Action")}}</td>
@@ -18,6 +19,9 @@
             </td>
             <td>
                 ${{$product->price}}
+            </td>
+            <td>
+                ${{$product->Discount}}
             </td>
             <td>
                 {{$product->quantity}}

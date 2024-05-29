@@ -13,14 +13,14 @@ class HomeController extends Controller
         if(Auth::user()->role==1){
             return view("admin.all");
         }else{
-            $products = Product::paginate(5);
+            $products = Product::paginate(6);
             return view("user.all",compact("products"));
         }
     }
 
     // all
     public function all(){
-        $products = Product::paginate(5);
+        $products = Product::paginate(6);
         return view("user.all",compact("products"));
     }
 
@@ -47,8 +47,7 @@ class HomeController extends Controller
             $cart->save();
             $carts = cart::where('user_id',"$id")->get();
             session()->flash("success","Add product to Cart Successfully");
-        // $carts = cart::with('product')->get();
-            return view("user.Cart",compact("carts"));
+            return redirect(url("Show_Cart"));
         }else{
             return view("auth.login");
         }
@@ -79,7 +78,7 @@ class HomeController extends Controller
     public function delete_Cart($id){
         $cart_product = cart::findOrFail($id);
         $cart_product->Forcedelete();
-        session()->flash("success","delete from Cart Successfully");
+        session()->flash("success","delete Item from Cart Successfully");
         return redirect()->back();
     }
 

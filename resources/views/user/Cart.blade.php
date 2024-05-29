@@ -44,7 +44,7 @@
                                         <td>{{ $cart->quantity }}</td>
                                         <td>${{ $cart->total }}</td>
                                         <td><img src="{{ asset("storage/$cart->image") }}" alt="{{ $cart->product }}"
-                                                style="width: 40px;"></a></td>
+                                                style="width: 40px; "></a></td>
                                         <td>
                                             <div class="dropdown">
                                                 <button aria-expanded="false" aria-haspopup="true"
@@ -99,11 +99,12 @@
         </div>
     </div>
 @endforeach
-{{-- <script>
+
+<script>
     $('#delete_product').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)
         var id = button.data('id')
         var modal = $(this)
         modal.find('.modal-body #id').val(id);
     })
-</script> --}}
+</script>

@@ -30,10 +30,11 @@ class ProductController extends Controller
             "desc"=>"required|string",
             "image"=>"image|mimes:png,jpg,jpeg",
             "price"=>"required|numeric",
+            // "Discount"=>"numeric",
             "quantity"=>"required|numeric",
             "category_id"=>"required|exists:categories,id"
         ]);
-
+        $data['Discount']=$request->Discount;
         $data['image']=Storage::putFile('products',$data['image']);
         Product::create($data);
         session()->flash("success","product added!!!");
@@ -47,11 +48,13 @@ class ProductController extends Controller
     }
 
     public function update(Request $request , $id){
-        $data = $request->validate([
+    // dd($request->Discount);
+            $data = $request->validate([
             "name"=>"required|string|max:200",
             "desc"=>"required|string",
             "image"=>"image|mimes:png,jpg,jpeg",
             "price"=>"required|numeric",
+            // "Discount"=>"numeric",
             "quantity"=>"required|numeric",
             "category_id"=>"required|exists:categories,id"
         ]);
@@ -63,6 +66,7 @@ class ProductController extends Controller
             Storage::delete($product->image);
             $data['image']=Storage::putFile('products',$data['image']);
         }
+        $data['Discount']=$request->Discount;
        $product->update($data);
         session()->flash("success","product updated!!!");
         return redirect(url("products/show/$id"));

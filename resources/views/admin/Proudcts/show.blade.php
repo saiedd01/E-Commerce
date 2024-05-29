@@ -14,6 +14,7 @@
 {{__("message.Product Image")}} :
     <img src="{{asset("storage/$product->image")}}" alt="" style="width: 200px">
 {{__("message.Product Price")}} : {{$product->price}}  <br>
+Discount : {{$product->Discount}}  <br>
 {{__("message.Product Quantity")}} : {{$product->quantity}}
 <a class="mt-2" href="{{url("products/edit/$product->id")}}">
     <div class="btn btn-warning">{{__("message.Edit")}}</div>

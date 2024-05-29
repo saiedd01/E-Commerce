@@ -21,6 +21,10 @@
                 <input type="number" name="price" value="{{$product->price}}" placeholder="Product Price" class="form-control"><br>
             </div>
             <div class="mb-1">
+                <label for="exampleFormControlInput1" class="form-label">Discount Price</label>
+                <input type="number" name="Discount" value="{{$product->Discount}}" placeholder="Discount Price" class="form-control"><br>
+            </div>
+            <div class="mb-1">
                 <label for="exampleFormControlInput1" class="form-label">Product Quantity</label>
                 <input type="text" name="quantity" value="{{$product->quantity}}" placeholder="Product Quantity" class="form-control"><br>
             </div>

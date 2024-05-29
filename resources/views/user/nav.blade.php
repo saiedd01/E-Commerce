@@ -10,8 +10,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{url("categories")}}">{{__("message.Home")}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url("user/product")}}">{{__("message.Home")}}
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
