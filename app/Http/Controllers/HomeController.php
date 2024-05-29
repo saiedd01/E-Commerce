@@ -77,6 +77,11 @@ class HomeController extends Controller
         $data->product_id = $product_id->id;
         $data->user_id = $user_id;
         $data->quantity=$request->quantity;
+        if($product_id->discount != 0.00){
+            $data->total = $product_id->discount * $request->quantity;
+        }else{
+            $data->total = $product_id->price * $request->quantity;
+        }
         $data->save();
         session()->flash("success", "Add product to Cart Successfully");
         return redirect()->back();
@@ -112,8 +117,9 @@ class HomeController extends Controller
             $order->Address = $Address;
             $order->user_id = $user_id;
             $order->product_id=$cart->product_id;
+            $order->total = $cart->total;
             $order->Payment_status="Cash";
-            $order->Value_Status="2";
+            $order->Value_Status="3";
             $order->Status="In Progress";
             $order->save();
         }

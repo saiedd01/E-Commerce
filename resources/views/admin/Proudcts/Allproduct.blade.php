@@ -49,5 +49,9 @@
             @endforeach
         </tbody>
     </table>
+    {{-- make button redircet to AllOrder page --}}
+    <a href="{{ url("product/AllOrder") }}">
+        <div class="btn btn-primary">All Order</div>
+    </a>
     {{ $products->links() }}
 @endsection

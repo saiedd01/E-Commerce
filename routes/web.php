@@ -46,6 +46,10 @@ Route::middleware("is_admin","auth")->group(function(){
 
         Route::post("products/delete/{id}","delete");
 
+        Route::get("product/AllOrder","AllOrder");
+        Route::get("products/OnTheWay/{id}","OnTheWay");
+        Route::get("products/Delivered/{id}","Delivered");
+        Route::post("products/Cancelled/{id}","Cancelled");
 
     });
 });

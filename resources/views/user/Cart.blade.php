@@ -104,6 +104,11 @@
                             placeholder="Enter your phone number">
                     </div>
                     <div class="form-group">
+                        <label for="total">Total</label>
+                        <input type="text" class="form-control" id="total" name="total"
+                        placeholder="Total" value="{{ $TotalOfCart }}" readonly>
+                    </div>
+                    <div class="form-group">
                         <label for="address">Address</label>
                         <input type="text" class="form-control" id="address" name="address"
                             placeholder="Enter your address">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -80,5 +81,34 @@ class ProductController extends Controller
 
         session()->flash("success","product deleted!!!");
         return redirect(url("products"));
+    }
+
+    public function AllOrder(){
+        $orders = Order::all();
+        return view("admin.Proudcts.AllOrder",compact("orders"));
+    }
+
+    public function OnTheWay($id){
+        $order = Order::findOrfail($id);
+        $order->update([
+            "Status"=>"On The Way",
+            "Value_Status"=>"2"
+        ]);
+        session()->flash("success","order updated!!!");
+        return redirect(url("product/AllOrder"));
+    }
+
+    public function Delivered($id){
+        $order = Order::findOrfail($id);
+        $order->update(["Status"=>"Delivered","Value_Status"=>"1"]);
+        session()->flash("success","order updated!!!");
+        return redirect(url("product/AllOrder"));
+    }
+
+    public function Cancelled($id){
+        $order = Order::findOrfail($id);
+        $order->delete();
+        session()->flash("success","order cancelled!!!");
+        return redirect(url("product/AllOrder"));
     }
 }
