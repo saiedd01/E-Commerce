@@ -87,17 +87,19 @@ Route::controller(HomeController::class)->group(function(){
     // show one
     Route::get("user/product/show/{id}","show")->name("Show");
 
-    // Add to Cart
-    Route::post("add_to_cart/{id}","addToCart");
-
-    // Cart Page
-    Route::get("Show_Cart","Show_Cart");
-
-    //delete form cart
-    Route::post("cart/delete/{id}","delete_Cart");
-
     // Search
     Route::get("search","search");
+
+    // Add to Cart
+    Route::post("add_to_cart/{id}","addToCart")->middleware(['auth','verified']);
+
+    // Cart Page
+    Route::get("MyCart","MyCart")->middleware(['auth','verified']);
+    // Confirm Order
+    Route::post("confirm_order","Confirm_Order")->middleware(['auth','verified']);
+    //delete form cart
+    Route::post("cart/delete/{id}","delete_Cart")->middleware(['auth','verified']);
+
 
 });
 

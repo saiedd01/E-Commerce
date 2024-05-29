@@ -4,18 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class cart extends Model
+class Cart extends Model
 {
     use HasFactory;
-    use SoftDeletes;
-
     protected $fillable = [
-        "user_id", "email", "product_id", "quantity", "price", "total", "image",
+        "user_id", "product_id","quantity"
     ];
-
-    protected $date = ['deleted_at'];
 
     public function user()
     {

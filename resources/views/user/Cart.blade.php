@@ -14,6 +14,9 @@
                     <div class="d-flex justify-contenct-between">
                     </div>
                 </div>
+                @php
+                    $TotalOfCart = 0;
+                @endphp
                 <div class="card-body">
                     @include('success')
                     <div class="table-responsive">
@@ -22,11 +25,9 @@
                                 <tr>
                                     <th class="border-bottom-0">#</th>
                                     <th class="border-bottom-0">Name</th>
-                                    <th class="border-bottom-0">E-mail</th>
                                     <th class="border-bottom-0">Product</th>
                                     <th class="border-bottom-0">Price</th>
                                     <th class="border-bottom-0">Quantity</th>
-                                    <th class="border-bottom-0">Total</th>
                                     <th class="border-bottom-0">Image</th>
                                     <th class="border-bottom-0">action</th>
                                 </tr>
@@ -38,13 +39,29 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         <td>{{ $cart->user->name }}</td>
-                                        <td>{{ $cart->email }}</td>
-                                        <td>{{$cart->product}}</td>
-                                        <td>${{ $cart->price }}</td>
+                                        <td>{{ $cart->product->name }}</td>
+                                        <td>
+                                            @if ($cart->product->Discount != 0.0)
+                                                <h5>
+                                                    $@php
+                                                        $priceAfterDiscount =
+                                                            $cart->product->price - $cart->product->Discount;
+                                                        echo $priceAfterDiscount;
+                                                        $total = $priceAfterDiscount * $cart->quantity;
+                                                    @endphp
+                                                </h5>
+                                            @else
+                                                <h6>
+                                                    @php
+                                                        $total = $cart->product->price * $cart->quantity;
+                                                    @endphp
+                                                    ${{ $cart->product->price }}
+                                                </h6>
+                                            @endif
+                                        </td>
                                         <td>{{ $cart->quantity }}</td>
-                                        <td>${{ $cart->total }}</td>
-                                        <td><img src="{{ asset("storage/$cart->image") }}" alt="{{ $cart->product }}"
-                                                style="width: 40px; "></a></td>
+                                        <td><img src="{{ asset('storage/' . $cart->product->image) }}"
+                                                alt="{{ $cart->product->name }}" style="width: 40px; "></a></td>
                                         <td>
                                             <div class="dropdown">
                                                 <button aria-expanded="false" aria-haspopup="true"
@@ -61,11 +78,38 @@
                                                 </div>
                                         </td>
                                     </tr>
+                                    @php
+                                        echo $TotalOfCart = $TotalOfCart + $total;
+                                    @endphp
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center">
+        <h5> Total of Cart is : {{ $TotalOfCart }} </h5>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form method="POST" action="{{url("confirm_order")}}">
+                    @csrf
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" id="phone" name="phone"
+                            placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" name="address"
+                            placeholder="Enter your address">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Confirm Order</button>
+                </form>
             </div>
         </div>
     </div>

@@ -16,7 +16,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url("Show_Cart")}}">{{__("message.Cart")}}</a>
+                        <a class="nav-link" href="{{url("MyCart")}}">{{__("message.Cart")}} {{$count}} </a>
                     </li>
                     @if (session()->has('lang')&& session()->get('lang') == "ar")
 
