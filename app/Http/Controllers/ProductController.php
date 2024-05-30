@@ -11,118 +11,155 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function all(){
+    public function all()
+    {
         $products = Product::paginate(5);
-        return view("admin.Proudcts.Allproduct",compact("products"));
+        return view("admin.Proudcts.Allproduct", compact("products"));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $product = Product::findorfail($id);
-        return view("admin.Proudcts.show",compact("product"));
+        return view("admin.Proudcts.show", compact("product"));
     }
 
-    public function create(){
+    public function create()
+    {
         $categories = Category::all();
-        return view("admin.Proudcts.create")->with(["categories"=>$categories]);
+        return view("admin.Proudcts.create")->with(["categories" => $categories]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $data = $request->validate([
-            "name"=>"required|string|max:200",
-            "desc"=>"required|string",
-            "image"=>"image|mimes:png,jpg,jpeg",
-            "price"=>"required|numeric",
+            "name" => "required|string|max:200",
+            "desc" => "required|string",
+            "image" => "image|mimes:png,jpg,jpeg",
+            "price" => "required|numeric",
             // "Discount"=>"numeric",
-            "quantity"=>"required|numeric",
-            "category_id"=>"required|exists:categories,id"
+            "quantity" => "required|numeric",
+            "category_id" => "required|exists:categories,id"
         ]);
-        $data['Discount']=$request->Discount;
-        $data['image']=Storage::putFile('products',$data['image']);
+        $data['Discount'] = $request->Discount;
+        $data['image'] = Storage::putFile('products', $data['image']);
         Product::create($data);
-        session()->flash("success","product added!!!");
+        session()->flash("success", "product added!!!");
         return redirect(url("products"));
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $product = Product::findorFail($id);
         $categories = Category::all();
-        return view("admin.Proudcts.edit")->with("product",$product)->with("categories",$categories);
+        return view("admin.Proudcts.edit")->with("product", $product)->with("categories", $categories);
     }
 
-    public function update(Request $request , $id){
-    // dd($request->Discount);
-            $data = $request->validate([
-            "name"=>"required|string|max:200",
-            "desc"=>"required|string",
-            "image"=>"image|mimes:png,jpg,jpeg",
-            "price"=>"required|numeric",
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            "name" => "required|string|max:200",
+            "desc" => "required|string",
+            "image" => "image|mimes:png,jpg,jpeg",
+            "price" => "required|numeric",
             // "Discount"=>"numeric",
-            "quantity"=>"required|numeric",
-            "category_id"=>"required|exists:categories,id"
+            "quantity" => "required|numeric",
+            "category_id" => "required|exists:categories,id"
         ]);
 
         // check
-        $product=Product::findOrfail($id);
+        $product = Product::findOrfail($id);
 
-        if($request->has("image")){
+        if ($request->has("image")) {
             Storage::delete($product->image);
-            $data['image']=Storage::putFile('products',$data['image']);
+            $data['image'] = Storage::putFile('products', $data['image']);
         }
-        $data['Discount']=$request->Discount;
-       $product->update($data);
-        session()->flash("success","product updated!!!");
+        $data['Discount'] = $request->Discount;
+        $product->update($data);
+        session()->flash("success", "product updated!!!");
         return redirect(url("products/show/$id"));
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $product =  Product::findOrFail($id);
         // Storage::delete($product->image);
         $product->delete();
-        session()->flash("success","product deleted!!!");
+        session()->flash("success", "product deleted!!!");
         return redirect(url("products"));
     }
 
-    public function AllOrder(){
+    public function allOrder()
+    {
+        // Retrieve all orders
         $orders = Order::all();
-        return view("admin.Proudcts.AllOrder",compact("orders"));
+
+        // Return view with orders data
+        return view("admin.Proudcts.AllOrder", compact("orders"));
     }
 
-    public function OnTheWay($id){
-        $order = Order::findOrfail($id);
+    public function onTheWay($id)
+    {
+        // Find the order by ID
+        $order = Order::findOrFail($id);
+
+        // Update order status to "On The Way" and value status to "2"
         $order->update([
-            "Status"=>"On The Way",
-            "Value_Status"=>"2"
+            "Status" => "On The Way",
+            "Value_Status" => "2"
         ]);
-        session()->flash("success","order updated!!!");
+
+        // Flash success message and redirect to all orders page
+        session()->flash("success", "Order updated!");
         return redirect(url("product/AllOrder"));
     }
 
-    public function Delivered($id){
-        $order = Order::findOrfail($id);
+    public function delivered($id)
+    {
+        // Find the order by ID
+        $order = Order::findOrFail($id);
+
+        // Update order status to "Delivered" and value status to "1"
         $order->update([
-            "Status"=>"Delivered",
-            "Value_Status"=>"1"
+            "Status" => "Delivered",
+            "Value_Status" => "1"
         ]);
-        session()->flash("success","order updated!!!");
+
+        // Flash success message and redirect to all orders page
+        session()->flash("success", "Order updated!");
         return redirect(url("product/AllOrder"));
     }
 
-    public function Cancelled($id){
-        $order = Order::findOrfail($id);
+    public function cancelled($id)
+    {
+        // Find the order by ID
+        $order = Order::findOrFail($id);
+
+        // Delete the order
         $order->delete();
-        session()->flash("success","order cancelled!!!");
+
+        // Flash success message and redirect to all orders page
+        session()->flash("success", "Order cancelled!");
         return redirect(url("product/AllOrder"));
     }
 
-    public function users(){
-        $users = User::where("role",'0')->get();
-        return view("admin.AllUsers",compact("users"));
+    public function users()
+    {
+        // Retrieve all users with role 0
+        $users = User::where("role", '0')->get();
+
+        // Return view with users data
+        return view("admin.allUsers", compact("users"));
     }
 
-    public function UserOrders($id){
-        $user = User::findOrfail($id);
-        $orders = Order::where("user_id",$user->id)->get();
-        // dd($orders);
-        return view("admin.User_Orders",compact("user","orders"));
+    public function userOrders($id)
+    {
+        // Find the user by ID
+        $user = User::findOrFail($id);
+
+        // Retrieve orders for the user
+        $orders = $user->orders;
+
+        // Return view with user and orders data
+        return view("admin.userOrders", compact("user", "orders"));
     }
 }

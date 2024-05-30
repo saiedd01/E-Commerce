@@ -107,7 +107,7 @@
         </a>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="{{url("AllUsers")}}">
+        <a class="nav-link" href="{{url("allUsers")}}">
           <span class="menu-icon">
             <i class="fa-solid fa-user" style="color: #0fd7bf;"></i>
           </span>
