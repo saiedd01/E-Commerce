@@ -11,26 +11,43 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url("user/product")}}">{{__("message.Home")}}
+                        <a class="nav-link" href="{{ url('user/product') }}">{{ __('message.Home') }}
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url("MyCart")}}">{{__("message.Cart")}} {{$count}} </a>
+                        <a class="nav-link" href="{{ url('MyCart') }}">{{ __('message.Cart') }} {{ $count }} </a>
                     </li>
-                    @if (session()->has('lang')&& session()->get('lang') == "ar")
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url("change/en")}}">English</a>
-                    </li>
+                    @if (session()->has('lang') && session()->get('lang') == 'ar')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('change/en') }}">English</a>
+                        </li>
                     @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url("change/ar")}}">Arabic</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('change/ar') }}">Arabic</a>
+                        </li>
                     @endif
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url("dashboard")}}">{{__("message.Back")}}</a>
-                    </li>
+                    @if (Route::has('login'))
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Account
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @auth
+                                    <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
+                                @else
+                                    <a class="dropdown-item" href="{{ route('login') }}">Log in</a>
+                                    @if (Route::has('register'))
+                                        <a class="dropdown-item" href="{{ route('register') }}">Register</a>
+                                    @endif
+                                @endauth
+                            </div>
+                        </li>
+                    @endif
+                    {{-- <li class="nav-item">
+                        <a class="nav-link" href="{{ url('dashboard') }}">{{ __('message.Back') }}</a>
+                    </li> --}}
                 </ul>
             </div>
         </div>
