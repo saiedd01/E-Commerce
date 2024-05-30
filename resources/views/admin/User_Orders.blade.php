@@ -18,13 +18,8 @@
                     </div>
                     <div class="card-body">
                         <p><strong>Name:</strong> {{ $user->name }}</p>
-                        @if ($orders->isNotEmpty())
-                            <p><strong>Phone:</strong> {{ $orders->first()->Phone }}</p>
-                            <p><strong>Address:</strong> {{ $orders->first()->Address }}</p>
-                        @else
-                            <p><strong>Phone:</strong> Not available</p>
-                            <p><strong>Address:</strong> Not available</p>
-                        @endif
+                            <p><strong>Phone:</strong> {{ $user->phone }}</p>
+                            <p><strong>Address:</strong> {{ $user->Address }}</p>
                     </div>
                 </div>
                 <div class="card">
@@ -47,6 +42,8 @@
                                     <th>Order ID</th>
                                     <th>Order Date</th>
                                     <th>Order Status</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
                                     <th>Order Details</th>
                                 </tr>
                             </thead>
@@ -56,6 +53,8 @@
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->created_at }}</td>
                                         <td>{{ $order->Status }}</td>
+                                        <td>{{ $order->Phone }}</td>
+                                        <td>{{ $order->Address }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button aria-expanded="false" aria-haspopup="true"

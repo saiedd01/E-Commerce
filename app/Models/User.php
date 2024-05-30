@@ -28,6 +28,8 @@ class User extends Authenticatable
         'email',
         'password',
         "access_token",
+        "phone",
+        "Address",
     ];
 
     public function carts(){

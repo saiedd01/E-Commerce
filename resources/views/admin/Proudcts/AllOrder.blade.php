@@ -1,16 +1,25 @@
 @extends('admin.layout')
 
+<style>
+    .custom-card-body {
+    padding: -50px;
+    border-radius: 0.25rem;
+    border:  3px ;
+    border-style: hidden;
+    width: auto;
+}
+</style>
+
 @section('body')
-    {{--  i want to make table to display the order details from Order table --}}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div style="width: 100%">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header pb-0">
                         <h4>Orders List</h4>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-striped" style="width: 100%">
+                    <div class= "custom-card-body">
+                        <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Order ID</th>
@@ -34,32 +43,34 @@
                                         <td>{{ $order->Phone }}</td>
                                         <td>{{ $order->Address }}</td>
                                         <td>{{ $order->product->name }}</td>
-                                        <td>@if ($order->product->Discount != 0.0)
-                                            <h5>
-                                                $@php
-                                                    $priceAfterDiscount =
-                                                        $order->product->price - $order->product->Discount;
-                                                    echo $priceAfterDiscount;
-                                                @endphp
-                                            </h5>
-                                        @else
-                                            <h6>
-                                                ${{ $order->product->price }}
-                                            </h6>
-                                        @endif</td>
-                                        <td>{{$order->quantity}}</td>
-                                        <td>{{$order->total}}</td>
+                                        <td>
+                                            @if ($order->product->Discount != 0.0)
+                                                <h5>
+                                                    $@php
+                                                        $priceAfterDiscount =
+                                                            $order->product->price - $order->product->Discount;
+                                                        echo $priceAfterDiscount;
+                                                    @endphp
+                                                </h5>
+                                            @else
+                                                <h6>
+                                                    ${{ $order->product->price }}
+                                                </h6>
+                                            @endif
+                                        </td>
+                                        <td>{{ $order->quantity }}</td>
+                                        <td>{{ $order->total }}</td>
                                         <td><img src="{{ asset('storage/' . $order->product->image) }}"
                                                 alt="{{ $order->product->name }}" style="width: 40px; "></a>
                                         </td>
                                         <td>
                                             @if ($order->Value_Status == 1)
-                                            <span class="text-success"> {{ $order->Status }} </span>
-                                        @elseif ($order->Value_Status == 2)
-                                            <span class="text-warning"> {{ $order->Status }} </span>
-                                        @else
-                                            <span class="text-danger"> {{ $order->Status }} </span>
-                                        @endif
+                                                <span class="text-success"> {{ $order->Status }} </span>
+                                            @elseif ($order->Value_Status == 2)
+                                                <span class="text-warning"> {{ $order->Status }} </span>
+                                            @else
+                                                <span class="text-danger"> {{ $order->Status }} </span>
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="dropdown">
@@ -76,7 +87,8 @@
                                                         <div class="btn btn-success">Delivered</div>
                                                     </a>
                                                     {{-- Cancelled --}}
-                                                    <form action="{{ url("products/Cancelled/$order->id") }}" method="post">
+                                                    <form action="{{ url("products/Cancelled/$order->id") }}"
+                                                        method="post">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger mt-2">Cancel</button>
                                                     </form>
@@ -84,11 +96,11 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
