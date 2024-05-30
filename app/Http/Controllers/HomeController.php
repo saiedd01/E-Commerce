@@ -77,8 +77,9 @@ class HomeController extends Controller
         $data->product_id = $product_id->id;
         $data->user_id = $user_id;
         $data->quantity=$request->quantity;
-        if($product_id->discount != 0.00){
-            $data->total = $product_id->discount * $request->quantity;
+        if($product_id->Discount != 0.00){
+            $PriceAfterDiscount = $product_id->price - $product_id->Discount;
+            $data->total = $PriceAfterDiscount * $request->quantity;
         }else{
             $data->total = $product_id->price * $request->quantity;
         }
@@ -118,6 +119,7 @@ class HomeController extends Controller
             $order->user_id = $user_id;
             $order->product_id=$cart->product_id;
             $order->total = $cart->total;
+            $order->quantity = $cart->quantity;
             $order->Payment_status="Cash";
             $order->Value_Status="3";
             $order->Status="In Progress";

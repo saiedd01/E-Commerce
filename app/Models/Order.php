@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $fillable = [
-        "user_id", "product_id","Address","Payment_status","Value_Status","Status","Phone","total"
+        "user_id", "product_id","Address","Payment_status","Value_Status","Status","Phone","total","quantity"
     ];
 
     protected $date=['deleted_at'];

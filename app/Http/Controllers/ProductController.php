@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -75,10 +76,8 @@ class ProductController extends Controller
 
     public function delete($id){
         $product =  Product::findOrFail($id);
-
         // Storage::delete($product->image);
         $product->delete();
-
         session()->flash("success","product deleted!!!");
         return redirect(url("products"));
     }
@@ -100,7 +99,10 @@ class ProductController extends Controller
 
     public function Delivered($id){
         $order = Order::findOrfail($id);
-        $order->update(["Status"=>"Delivered","Value_Status"=>"1"]);
+        $order->update([
+            "Status"=>"Delivered",
+            "Value_Status"=>"1"
+        ]);
         session()->flash("success","order updated!!!");
         return redirect(url("product/AllOrder"));
     }
@@ -110,5 +112,17 @@ class ProductController extends Controller
         $order->delete();
         session()->flash("success","order cancelled!!!");
         return redirect(url("product/AllOrder"));
+    }
+
+    public function users(){
+        $users = User::where("role",'0')->get();
+        return view("admin.AllUsers",compact("users"));
+    }
+
+    public function UserOrders($id){
+        $user = User::findOrfail($id);
+        $orders = Order::where("user_id",$user->id)->get();
+        // dd($orders);
+        return view("admin.User_Orders",compact("user","orders"));
     }
 }

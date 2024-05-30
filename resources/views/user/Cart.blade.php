@@ -79,7 +79,7 @@
                                         </td>
                                     </tr>
                                     @php
-                                        echo $TotalOfCart = $TotalOfCart + $total;
+                                        $TotalOfCart = $TotalOfCart + $total;
                                     @endphp
                                 @endforeach
                             </tbody>

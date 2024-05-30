@@ -106,6 +106,13 @@
           <span class="menu-title">{{__("message.Add Category")}}</span>
         </a>
       </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{{url("AllUsers")}}">
+          <span class="menu-icon">
+            <i class="fa-solid fa-user" style="color: #0fd7bf;"></i>
+          </span>
+          <span class="menu-title">Users</span>
+        </a>
+      </li>
     </ul>
   </nav>
-  
