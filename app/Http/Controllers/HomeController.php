@@ -26,8 +26,8 @@ class HomeController extends Controller
                 $user_id = $user->id;
                 $count = Cart::where("user_id", $user_id)->count();
             } else {
-                // If not authenticated, set count to null
-                $count = null;
+                // If not authenticated, set count to 0
+                $count = 0;
             }
             // Return view with products and cart count
             return view("user.all", compact("products", "count"));
@@ -46,8 +46,8 @@ class HomeController extends Controller
             $user_id = $user->id;
             $count = Cart::where("user_id", $user_id)->count();
         } else {
-            // If not authenticated, set count to null
-            $count = null;
+            // If not authenticated, set count to 0
+            $count = 0;
         }
         // Return view with products and cart count
         return view("user.all", compact("products", "count"));
@@ -64,8 +64,8 @@ class HomeController extends Controller
             $user_id = $user->id;
             $count = Cart::where("user_id", $user_id)->count();
         } else {
-            // If not authenticated, set count to null
-            $count = null;
+            // If not authenticated, set count to 0
+            $count = 0;
         }
         // Return view with product and cart count
         return view("user.show", compact("product", "count"));
@@ -73,6 +73,16 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
+        // Check if user is authenticated
+        if (Auth::id()) {
+            // Get user and cart count
+            $user = Auth::user();
+            $user_id = $user->id;
+            $count = Cart::where("user_id", $user_id)->count();
+        } else {
+            // If not authenticated, set count to 0
+            $count = 0;
+        }
         // Get search key from request
         $search = $request->key;
         // Search products by name
@@ -84,7 +94,7 @@ class HomeController extends Controller
             return redirect()->back();
         } else {
             // If products found, return view with products
-            return view("user.all", compact("products"));
+            return view("user.all", compact("products","count"));
         }
     }
 

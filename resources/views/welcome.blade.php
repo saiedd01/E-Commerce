@@ -1,7 +1,7 @@
 @extends('user.layout')
 
 @section('title')
-    <title> {{ __('message.All Products') }} </title>
+    <title> Home </title>
 @endsection
 
 @section('latest')

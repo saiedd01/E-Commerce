@@ -1,8 +1,26 @@
+<style>
+    .cart-link {
+        position: relative;
+        display: inline-block;
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+</style>
 <header class="">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <h2>E-<em>Commerce</em></h2>
+            <a class="navbar-brand" href="{{ url('user/product') }}">
+                <h2>E-<em style="font-style: normal;">Commerce</em></h2>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,7 +34,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('MyCart') }}">{{ __('message.Cart') }} {{ $count }} </a>
+                        <a class="nav-link cart-link" href="{{ url('MyCart') }}">
+                            {{ __('message.Cart') }}
+                            <span class="cart-count">{{ $count }}</span>
+                        </a>
                     </li>
                     @if (session()->has('lang') && session()->get('lang') == 'ar')
                         <li class="nav-item">
