@@ -20,13 +20,13 @@
             </div>
 
             <div class="mt-4">
-                <x-label for="email" value="{{ __('Phone') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autocomplete="username" />
+                <x-label for="phone" value="{{ __('phone') }}" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required/>
             </div>
 
             <div class="mt-4">
-                <x-label for="email" value="{{ __('Address') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="text" name="Address" :value="old('Address')" autocomplete="username" />
+                <x-label for="Address" value="{{ __('Address') }}" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="Address" :value="old('Address')" required/>
             </div>
 
             <div class="mt-4">

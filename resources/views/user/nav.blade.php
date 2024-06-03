@@ -66,9 +66,6 @@
                             </div>
                         </li>
                     @endif
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" href="{{ url('dashboard') }}">{{ __('message.Back') }}</a>
-                    </li> --}}
                 </ul>
             </div>
         </div>
