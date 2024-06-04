@@ -135,7 +135,7 @@ class HomeController extends Controller
             // Get user's carts
             $carts = Cart::where('user_id', "$user_id")->get();
             // Return view with carts and cart count
-            return view("user.Cart", compact('carts', "count"));
+            return view("user.Cart", compact('carts', "count","user"));
         } else {
             // If not authenticated, redirect to login page
             return view("auth.login");
@@ -144,9 +144,18 @@ class HomeController extends Controller
 
     public function Confirm_Order(Request $request)
     {
-        // Get phone and address from request
-        $Phone = $request->phone;
-        $Address = $request->address;
+        $data = $request->validate([
+            "phone" => "required|string|regex:/^[0-9]{11,15}$/",
+            "address"=>"required|string|max:255",
+        ],[
+            "phone.required" => "Please Enter Phone Number",
+            "phone.regex" => "Please Enter Phone Number Correct",
+            "address.required" => "Please Enter Address",
+            "address.string" => "Please Enter Address Correct",
+        ]);
+        // Get phone and address after validation
+        $Phone = $data["phone"];
+        $Address = $data["address"];
         // Get user ID
         $user = Auth::user();
         $user_id = $user->id;

@@ -33,7 +33,7 @@
                 <div class="dropdown">
                     <button aria-expanded="false" aria-haspopup="true"
                         class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
-                        type="button">actions<i class="text-danger fas fa-trash-alt"></i></button>
+                        type="button"><i class="fas fa-caret-down ml-1"></i> actions</button>
                     <div class="dropdown-menu tx-13">
                         {{-- Restore --}}
                         <a class="dropdown-item" href="{{url("archive/restore/$product->id")}}">
@@ -43,7 +43,7 @@
                         {{-- delete --}}
                         <form action="{{url("archive/delete/$product->id")}}" method="post">
                             @csrf
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-danger mt-2">{{(__("message.Delete"))}}</button>
+                            &nbsp;<button type="submit" class="btn btn-danger mt-2">{{(__("message.Delete"))}}</button>
                         </form>
                     </div>
                 </div>

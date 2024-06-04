@@ -19,6 +19,7 @@
                 @endphp
                 <div class="card-body">
                     @include('success')
+                    @include("error")
                     <div class="table-responsive">
                         <table id="example1" class="table key-buttons text-md-nowrap" style="text-align: center">
                             <thead>
@@ -68,6 +69,7 @@
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">actions<i class="fas fa-caret-down ml-1"></i></button>
                                                 <div class="dropdown-menu tx-13">
+                                                    
                                                     {{-- delete product --}}
                                                     <button type="button" class="btn btn-outline--light"
                                                         data-toggle="modal"
@@ -101,6 +103,9 @@
                     <div class="form-group">
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" id="phone" name="phone"
+                        @if ($user->carts->count() > 0)
+                            value="{{$user->phone}}"
+                        @endif
                             placeholder="Enter your phone number">
                     </div>
                     <div class="form-group">
@@ -111,6 +116,9 @@
                     <div class="form-group">
                         <label for="address">Address</label>
                         <input type="text" class="form-control" id="address" name="address"
+                        @if ($user->carts->count() > 0)
+                            value="{{$user->Address}}"
+                        @endif
                             placeholder="Enter your address">
                     </div>
                     <button type="submit" class="btn btn-primary">Confirm Order</button>
