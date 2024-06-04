@@ -100,10 +100,20 @@ Route::controller(HomeController::class)->group(function(){
 
     // Cart Page
     Route::get("MyCart","MyCart")->middleware(['auth','verified']);
+
+    // Edit in Cart Product
+    Route::get("cart/edit/{id}","editCart")->middleware(['auth','verified']);
+
+    // Update
+    Route::post("cart/update/{id}","updateCart");
+
     // Confirm Order
     Route::post("confirm_order","Confirm_Order")->middleware(['auth','verified']);
     //delete form cart
     Route::post("cart/delete/{id}","delete_Cart")->middleware(['auth','verified']);
+
+    //logout
+    Route::get("logout","logout")->middleware(['auth','verified']);
 
 
 });

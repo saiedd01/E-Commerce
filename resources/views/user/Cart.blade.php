@@ -19,7 +19,7 @@
                 @endphp
                 <div class="card-body">
                     @include('success')
-                    @include("error")
+                    @include('error')
                     <div class="table-responsive">
                         <table id="example1" class="table key-buttons text-md-nowrap" style="text-align: center">
                             <thead>
@@ -69,13 +69,18 @@
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">actions<i class="fas fa-caret-down ml-1"></i></button>
                                                 <div class="dropdown-menu tx-13">
-                                                    
+                                                    {{-- Edit Product --}}
+                                                    <a class="dropdown-item"
+                                                        href="{{url("cart/edit/$cart->id")}}"><i
+                                                        class="text-primary fas fa-edit"></i>&nbsp;&nbsp;
+                                                        Edit
+                                                    </a>
                                                     {{-- delete product --}}
-                                                    <button type="button" class="btn btn-outline--light"
-                                                        data-toggle="modal"
-                                                        data-target="#delete_product_{{ $cart->id }}">
-                                                        <i class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;
-                                                        Delete
+                                                    <a class="dropdown-item" href="#" data-id="{{ $cart->id }}"
+                                                        data-toggle="modal" data-target="#delete_product_{{ $cart->id }}"><i
+                                                            class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;
+                                                            Delete
+                                                    </a>
                                                     </button>
                                                 </div>
                                         </td>
@@ -98,27 +103,23 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <form method="POST" action="{{url("confirm_order")}}">
+                <form method="POST" action="{{ url('confirm_order') }}">
                     @csrf
                     <div class="form-group">
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" id="phone" name="phone"
-                        @if ($user->carts->count() > 0)
-                            value="{{$user->phone}}"
-                        @endif
+                            @if ($user->carts->count() > 0) value="{{ $user->phone }}" @endif
                             placeholder="Enter your phone number">
                     </div>
                     <div class="form-group">
                         <label for="total">Total</label>
-                        <input type="text" class="form-control" id="total" name="total"
-                        placeholder="Total" value="{{ $TotalOfCart }}" readonly>
+                        <input type="text" class="form-control" id="total" name="total" placeholder="Total"
+                            value="{{ $TotalOfCart }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="address">Address</label>
                         <input type="text" class="form-control" id="address" name="address"
-                        @if ($user->carts->count() > 0)
-                            value="{{$user->Address}}"
-                        @endif
+                            @if ($user->carts->count() > 0) value="{{ $user->Address }}" @endif
                             placeholder="Enter your address">
                     </div>
                     <button type="submit" class="btn btn-primary">Confirm Order</button>
@@ -127,6 +128,7 @@
         </div>
     </div>
 @endsection
+
 
 {{-- delete modal  --}}
 @foreach ($carts as $cart)
@@ -157,6 +159,21 @@
     </div>
 @endforeach
 
+{{-- Edit --}}
+
+<script>
+    $('#edit_product').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var Product_name = button.data('name')
+        // var pro_id = button.data('pro_id')
+        var description = button.data('description')
+        var modal = $(this)
+        modal.find('.modal-body #Product_name').val(Product_name);
+        // modal.find('.modal-body #pro_id').val(pro_id);
+    })
+</script>
+
+{{-- delete --}}
 <script>
     $('#delete_product').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)

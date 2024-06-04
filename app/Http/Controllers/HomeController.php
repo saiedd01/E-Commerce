@@ -94,7 +94,7 @@ class HomeController extends Controller
             return redirect()->back();
         } else {
             // If products found, return view with products
-            return view("user.all", compact("products","count"));
+            return view("user.all", compact("products", "count"));
         }
     }
 
@@ -135,7 +135,7 @@ class HomeController extends Controller
             // Get user's carts
             $carts = Cart::where('user_id', "$user_id")->get();
             // Return view with carts and cart count
-            return view("user.Cart", compact('carts', "count","user"));
+            return view("user.Cart", compact('carts', "count", "user"));
         } else {
             // If not authenticated, redirect to login page
             return view("auth.login");
@@ -146,8 +146,8 @@ class HomeController extends Controller
     {
         $data = $request->validate([
             "phone" => "required|string|regex:/^[0-9]{11,15}$/",
-            "address"=>"required|string|max:255",
-        ],[
+            "address" => "required|string|max:255",
+        ], [
             "phone.required" => "Please Enter Phone Number",
             "phone.regex" => "Please Enter Phone Number Correct",
             "address.required" => "Please Enter Address",
@@ -198,10 +198,53 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    public function editCart($id)
+    {
+        // dd($id);
+        // Check if user is authenticated
+        if (Auth::id()) {
+            // Get user and cart count
+            $user = Auth::user();
+            $user_id = $user->id;
+            $count = Cart::where("user_id", $user_id)->count();
+        } else {
+            // If not authenticated, set count to 0
+            $count = 0;
+        }
+        $cart = Cart::findorfail($id);
+        // $product = Product::findorFail($id);
+        return view("user.editCart", compact("cart", "count"));
+    }
+
+    public function updateCart(Request $request, $id)
+    {
+        // Find the cart item or throw an exception if not found
+        $cart = Cart::findorFail($id);
+
+        // Update cart item quantity based on request data
+        $cart->quantity = $request->quantity;
+
+        // Calculate total price based on product price and potential discount
+        $priceAfterDiscount = $cart->product->price - $cart->product->Discount;
+        $cart->total = $priceAfterDiscount > 0 ? $priceAfterDiscount * $request->quantity : $cart->product->price * $request->quantity;
+
+        // Update the cart item in the database
+        $cart->update(); // Assuming your Cart model uses `save` method
+
+        // Flash a success message for user feedback
+        session()->flash('success', 'Cart Updated Successfully!');
+
+        // Redirect user to the cart page
+        return redirect('MyCart');
+    }
     public function logout()
     {
-        // Logout user and redirect to login page
+        $userId = Auth::id();  // Retrieve user ID before logging out
+        $cart = Cart::where('user_id', $userId);
+        dd($cart);
         Auth::logout();
+
+        $cart->forcedelete(); // Delete user's cart items
         return view("auth.login");
     }
 }
