@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -32,11 +33,23 @@ class User extends Authenticatable
         "Address",
     ];
 
-    public function carts(){
+    public function carts()
+    {
         return $this->hasMany(cart::class);
     }
 
-    public function orders(){
+    public static function getCartCount()
+    {
+        if (Auth::check()) { // Use Auth::check() for simpler logic
+            $user = Auth::user();
+            return Cart::where("user_id", $user->id)->count();
+        }
+
+        return 0; // Default to 0 if not authenticated
+    }
+
+    public function orders()
+    {
         return $this->hasMany(Order::class);
     }
 

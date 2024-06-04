@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,16 +20,9 @@ class HomeController extends Controller
         } else {
             // If user, show products
             $products = Product::paginate(6);
-            // Check if user is authenticated
-            if (Auth::id()) {
-                // Get user and cart count
-                $user = Auth::user();
-                $user_id = $user->id;
-                $count = Cart::where("user_id", $user_id)->count();
-            } else {
-                // If not authenticated, set count to 0
-                $count = 0;
-            }
+
+            // call function Count
+            $count = User::getCartCount();
             // Return view with products and cart count
             return view("user.all", compact("products", "count"));
         }
@@ -39,16 +33,10 @@ class HomeController extends Controller
     {
         // Get all products
         $products = Product::paginate(6);
-        // Check if user is authenticated
-        if (Auth::id()) {
-            // Get user and cart count
-            $user = Auth::user();
-            $user_id = $user->id;
-            $count = Cart::where("user_id", $user_id)->count();
-        } else {
-            // If not authenticated, set count to 0
-            $count = 0;
-        }
+
+        // call function Count
+        $count = User::getCartCount();
+
         // Return view with products and cart count
         return view("user.all", compact("products", "count"));
     }
@@ -57,36 +45,25 @@ class HomeController extends Controller
     {
         // Find product by ID
         $product = Product::findOrFail($id);
-        // Check if user is authenticated
-        if (Auth::id()) {
-            // Get user and cart count
-            $user = Auth::user();
-            $user_id = $user->id;
-            $count = Cart::where("user_id", $user_id)->count();
-        } else {
-            // If not authenticated, set count to 0
-            $count = 0;
-        }
+
+        // call function Count
+        $count = User::getCartCount();
+
         // Return view with product and cart count
         return view("user.show", compact("product", "count"));
     }
 
     public function search(Request $request)
     {
-        // Check if user is authenticated
-        if (Auth::id()) {
-            // Get user and cart count
-            $user = Auth::user();
-            $user_id = $user->id;
-            $count = Cart::where("user_id", $user_id)->count();
-        } else {
-            // If not authenticated, set count to 0
-            $count = 0;
-        }
+        // call function Count
+        $count = User::getCartCount();
+
         // Get search key from request
         $search = $request->key;
+
         // Search products by name
         $products = Product::where("name", 'like', "%$search%")->paginate(3);
+
         // Check if products found
         if ($products->isEmpty()) {
             // If no products found, flash error message and redirect back
@@ -102,14 +79,17 @@ class HomeController extends Controller
     {
         // Find product by ID
         $product_id = Product::findOrFail($id);
+
         // Get user ID
         $user = Auth::user();
         $user_id = $user->id;
+
         // Create new cart item
         $data = new Cart();
         $data->product_id = $product_id->id;
         $data->user_id = $user_id;
         $data->quantity = $request->quantity;
+
         // Calculate total price
         if ($product_id->Discount != 0.00) {
             $priceAfterDiscount = $product_id->price - $product_id->Discount;
@@ -117,8 +97,10 @@ class HomeController extends Controller
         } else {
             $data->total = $product_id->price * $request->quantity;
         }
+
         // Save cart item
         $data->save();
+
         // Flash success message and redirect back
         session()->flash("success", "Add product to Cart Successfully");
         return redirect()->back();
@@ -153,14 +135,18 @@ class HomeController extends Controller
             "address.required" => "Please Enter Address",
             "address.string" => "Please Enter Address Correct",
         ]);
+
         // Get phone and address after validation
         $Phone = $data["phone"];
         $Address = $data["address"];
+
         // Get user ID
         $user = Auth::user();
         $user_id = $user->id;
+
         // Get user's carts
         $carts = Cart::where('user_id', "$user_id")->get();
+
         // Create order for each cart item
         foreach ($carts as $cart) {
             $order = new Order();
@@ -176,12 +162,14 @@ class HomeController extends Controller
             $order->Status = "In Progress";
             $order->save();
         }
+
         // Delete carts after placing order
         $empty_cart = Cart::where('user_id', "$user_id")->get();
         foreach ($empty_cart as $empty) {
             $data = Cart::find($empty->id);
             $data->delete();
         }
+
         // Flash success message and redirect back
         session()->flash("success", "Order Successfully");
         return redirect()->back();
@@ -191,8 +179,10 @@ class HomeController extends Controller
     {
         // Find cart item by ID
         $cart_product = cart::findOrFail($id);
+
         // Delete cart item
         $cart_product->Forcedelete();
+
         // Flash success message and redirect back
         session()->flash("success", "delete Item from Cart Successfully");
         return redirect()->back();
@@ -201,16 +191,10 @@ class HomeController extends Controller
     public function editCart($id)
     {
         // dd($id);
-        // Check if user is authenticated
-        if (Auth::id()) {
-            // Get user and cart count
-            $user = Auth::user();
-            $user_id = $user->id;
-            $count = Cart::where("user_id", $user_id)->count();
-        } else {
-            // If not authenticated, set count to 0
-            $count = 0;
-        }
+
+        // call function Count
+        $count = User::getCartCount();
+
         $cart = Cart::findorfail($id);
         // $product = Product::findorFail($id);
         return view("user.editCart", compact("cart", "count"));
@@ -246,6 +230,6 @@ class HomeController extends Controller
         $cart->forcedelete(); // Delete user's cart items
 
         $products = Product::paginate(6);
-        return redirect("/")->with("products",$products);
+        return redirect("/")->with("products", $products);
     }
 }
