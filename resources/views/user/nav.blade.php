@@ -56,7 +56,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @auth
-                                    <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
+                                    {{-- <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a> --}}
                                     <a class="dropdown-item" href="{{ url("/logout") }}">logout</a>
                                 @else
                                     <a class="dropdown-item" href="{{ route('login') }}">Log in</a>

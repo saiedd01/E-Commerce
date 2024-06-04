@@ -240,11 +240,12 @@ class HomeController extends Controller
     public function logout()
     {
         $userId = Auth::id();  // Retrieve user ID before logging out
-        $cart = Cart::where('user_id', $userId);
-        dd($cart);
         Auth::logout();
 
+        $cart = Cart::where('user_id', $userId);
         $cart->forcedelete(); // Delete user's cart items
-        return view("auth.login");
+
+        $products = Product::paginate(6);
+        return redirect("/")->with("products",$products);
     }
 }
