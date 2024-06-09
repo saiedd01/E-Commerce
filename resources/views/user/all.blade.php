@@ -58,13 +58,23 @@
                                 @endif
                                 <p>{{ $product->desc }}</p>
                                 <ul class="stars">
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
+                                    @php
+                                        $averageRating = $product->averageRating();
+                                        $fullStars = floor($averageRating);
+                                        $halfStar = ($averageRating - $fullStars) >= 0.5;
+                                    @endphp
+                                    @for ($i = 0; $i < 5; $i++)
+                                        @if ($i < $fullStars)
+                                            <li><i class="fa fa-star"></i></li>
+                                        @elseif ($halfStar)
+                                            <li><i class="fa fa-star-half-alt"></i></li>
+                                            @php $halfStar = false; @endphp
+                                        @else
+                                            <li><i class="far fa-star"></i></li>
+                                        @endif
+                                    @endfor
                                 </ul>
-                                <span>{{ __('message.Reviews') }} (24)</span>
+                                <span>{{ __('message.Reviews') }} ({{ $product->reviewCount() }})</span>
                             </div>
                         </div>
                     </div>

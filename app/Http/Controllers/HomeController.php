@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -217,6 +218,18 @@ class HomeController extends Controller
 
         // Redirect user to the cart page
         return redirect('MyCart');
+    }
+
+    public function review(Request $request){
+        $data = new Review();
+        $data->rating = $request->rating;
+        $data->review = $request->review;
+        $data->product_id = $request->id;
+        $data->user_id = Auth::user()->id;
+
+        $data->save();
+        session()->flash("success","your Reviwe is submitted successfully");
+        return redirect()->back();
     }
     public function logout()
     {

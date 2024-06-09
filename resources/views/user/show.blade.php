@@ -62,7 +62,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('submim_review') }}" method="post">
+                <form action="{{ url('submit_review') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
