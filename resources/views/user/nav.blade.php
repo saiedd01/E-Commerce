@@ -19,7 +19,7 @@
 <header class="">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('user/product') }}">
+            <a class="navbar-brand" href="{{ url('/') }}">
                 <h2>E-<em style="font-style: normal;">Commerce</em></h2>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('user/product') }}">{{ __('message.Home') }}
+                        <a class="nav-link" href="{{ url('/') }}">{{ __('message.Home') }}
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>

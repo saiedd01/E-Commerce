@@ -70,7 +70,6 @@
     </a>
     {{ $products->links() }}
 @endsection
-
 {{-- delete modal  --}}
 @foreach ($products as $product)
     <div class="modal fade" id="delete_product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

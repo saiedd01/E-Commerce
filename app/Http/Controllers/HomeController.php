@@ -28,7 +28,6 @@ class HomeController extends Controller
         }
     }
 
-    // all
     public function all()
     {
         // Get all products
@@ -190,8 +189,6 @@ class HomeController extends Controller
 
     public function editCart($id)
     {
-        // dd($id);
-
         // call function Count
         $count = User::getCartCount();
 

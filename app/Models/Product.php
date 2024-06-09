@@ -12,12 +12,13 @@ class Product extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        "name","desc","image","price","category_id","quantity","Discount"
+        "name", "desc", "image", "price", "category_id", "quantity", "Discount"
     ];
 
-    protected $date=['deleted_at'];
+    protected $date = ['deleted_at'];
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
@@ -29,5 +30,20 @@ class Product extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function averageRating()
+    {
+        return $this->reviews()->avg('rating');
+    }
+
+    public function reviewCount()
+    {
+        return $this->reviews()->count();
     }
 }
