@@ -43,8 +43,8 @@
                     </div>
                 </form>
                 <div>
-                    <button class="btn btn-outline-success btn-sm" data-id="{{$product->id}}"
-                        data-name="{{$product->name}}" data-toggle="modal" data-target="#review_Product">
+                    <button class="btn btn-outline-success btn-sm" data-id="{{ $product->id }}"
+                        data-name="{{ $product->name }}" data-toggle="modal" data-target="#review_Product">
                         Make Review
                     </button>
                 </div>
@@ -52,6 +52,40 @@
         </div>
     </div>
 
+    <div class="container mt-4">
+        <h2>Reviews</h2>
+        @forelse ($product->reviews as $review)
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h5 class="card-title">{{ $review->user->name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $review->rating)
+                                        <span class="text-warning">&#9733;</span>
+                                    @else
+                                        <span class="text-muted">&#9734;</span>
+                                    @endif
+                                @endfor
+                            </h6>
+                        </div>
+                        <div class="col-md-10">
+                            <p>{{ $review->review }}</p>
+                        </div>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ $review->created_at->format('M d, Y') }}</h6>
+                </div>
+            </div>
+        @empty
+            <p>No reviews yet.</p>
+        @endforelse
+    </div>
+
+
+
+
+    {{-- Make Review --}}
     <div class="modal fade" id="review_Product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -96,20 +130,20 @@
     </div>
 @endsection
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#review_Product').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
-                var name = button.data('name');
-                var id = button.data('id');
-                var modal = $(this);
-                modal.find('.modal-body #name').val(name);
-                modal.find('.modal-body #id').val(id);
-            });
+<script>
+    $(document).ready(function() {
+        $('#review_Product').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            var name = button.data('name');
+            var id = button.data('id');
+            var modal = $(this);
+            modal.find('.modal-body #name').val(name);
+            modal.find('.modal-body #id').val(id);
         });
-    </script>
+    });
+</script>
