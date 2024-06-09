@@ -74,7 +74,7 @@
                                         @endif
                                     @endfor
                                 </ul>
-                                <span>{{ __('message.Reviews') }} ({{ $product->reviewCount() }})</span>
+                                <a href="{{ route('Show', ['id' => $product->id]) }}#reviews" ><span>{{ __('message.Reviews') }} ({{ $product->reviewCount() }})</span></a>
                             </div>
                         </div>
                     </div>

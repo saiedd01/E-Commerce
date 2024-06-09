@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="container mt-4">
+    <div class="container mt-4" id="reviews">
         <h2>Reviews</h2>
         @forelse ($product->reviews as $review)
             <div class="card mt-3">
