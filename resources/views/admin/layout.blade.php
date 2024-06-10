@@ -1,5 +1,6 @@
 @include('admin.head')
 
+
         <!-- partial:partials/_sidebar.html -->
         @include('admin.sidebar')
     {{-- </div> --}}
