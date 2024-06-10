@@ -221,13 +221,15 @@ class HomeController extends Controller
     }
 
     public function review(Request $request){
-        $data = new Review();
-        $data->rating = $request->rating;
-        $data->review = $request->review;
-        $data->product_id = $request->id;
-        $data->user_id = Auth::user()->id;
+        $data = $request->validate([
+            "rating"=>'required|integer|min:1|max:5',
+            "review"=>"required|string",
+        ]);
+        
+        $data["product_id"] = $request->id;
+        $data["user_id"] = Auth::user()->id;
 
-        $data->save();
+        Review::create($data);
         session()->flash("success","your Reviwe is submitted successfully");
         return redirect()->back();
     }

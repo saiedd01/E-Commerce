@@ -23,4 +23,6 @@ Discount : {{$product->Discount}}  <br>
     @csrf
     <button type="submit" class="btn btn-danger mt-2">{{__("message.Delete")}}</button>
 </form>
+
+
 @endsection

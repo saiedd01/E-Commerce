@@ -6,6 +6,7 @@
 
 @section('latest')
     @include('success')
+    @include("error")
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card text-center p-4" style="width: 30rem; font-size: 1.5rem;">
             <img src="{{ asset("storage/$product->image") }}" class="card-img-top" alt="{{ $product->name }}">
