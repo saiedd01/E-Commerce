@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProductController extends Controller
 {
@@ -42,7 +45,24 @@ class ProductController extends Controller
         ]);
         $data['Discount'] = $request->Discount;
         $data['image'] = Storage::putFile('products', $data['image']);
-        Product::create($data);
+        $product = Product::create($data);
+
+        // Define QR code path
+        $qrCodeDir = storage_path('app/public/qrcodes');
+        $qrCodePath = $qrCodeDir . '/' . $product->id . '.png';
+
+        // Create directory if it doesn't exist
+        if (!File::exists($qrCodeDir)) {
+            File::makeDirectory($qrCodeDir, 0755, true);
+        }
+
+        // Generate QR Code
+        $productDetailUrl = route('Show', ['id' => $product->id]);
+        QrCode::format('png')->generate($productDetailUrl, $qrCodePath);
+
+        // Update product with QR Code path relative to storage/app/public/
+        $product->update(['qr_code' => 'qrcodes/' . $product->id . '.png']);
+
         session()->flash("success", "product added!!!");
         return redirect(url("products"));
     }

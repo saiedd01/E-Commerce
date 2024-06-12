@@ -1,8 +1,6 @@
 @extends('admin.layout')
 
 @section('body')
-    {{-- fix this and show it as a card  --}}
-
     <div class="card">
         <div class="card-body">
             <a class="btn btn-info mb-2" href="{{ url('products') }}">{{ __('message.Show All Products') }}</a>
@@ -12,10 +10,19 @@
             <p>{{ __('message.Product Name') }}: {{ $product->name }}</p>
             <p>{{ __('message.Product Desc') }}: {{ $product->desc }}</p>
             <p>{{ __('message.Product Image') }}:</p>
-            <img src="{{ asset("storage/$product->image") }}" alt="" style="width: 200px">
+            @if ($product->image)
+                <img src="{{ asset("storage/$product->image") }}" alt="{{ $product->name }}" style="width: 200px;">
+            @endif
+            @if ($product->qr_code)
+                <div>
+                    <h3>QR Code</h3>
+                    <img src="{{ asset("storage/$product->qr_code") }}" alt="QR Code for {{ $product->name }}">
+                </div>
+            @endif
             <p>{{ __('message.Product Price') }}: {{ $product->price }}</p>
             <p>Discount: {{ $product->Discount }}</p>
             <p>{{ __('message.Product Quantity') }}: {{ $product->quantity }}</p>
+            <p>Category: {{ $product->category->name }}</p>
             <a class="btn btn-warning mt-2" href="{{ url("products/edit/$product->id") }}">{{ __('message.Edit') }}</a>
             <form action="{{ url("products/delete/$product->id") }}" method="post">
                 @csrf
@@ -24,7 +31,7 @@
         </div>
     </div>
 
-    {{-- Make div to show all review of this products --}}
+    {{-- show all review of this products --}}
     <div class="mt-4" id="reviews">
         <h2>Reviews</h2>
         @forelse ($product->reviews as $review)
@@ -48,11 +55,6 @@
                         </div>
                     </div>
                     <h6 class="card-subtitle mb-2 text-muted">{{ $review->created_at->format('M d, Y') }}</h6>
-
-                    {{-- <div class="form-check form-switch ml-3">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                        <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
-                    </div> --}}
                 </div>
             </div>
         @empty

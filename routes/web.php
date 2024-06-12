@@ -80,6 +80,8 @@ Route::middleware("is_admin", "auth")->group(function () {
 });
 
 
+Route::get("user/product/show/{id}", [ProductController::class, 'show'])->name("Show");
+
 Route::controller(HomeController::class)->group(function () {
     Route::get("redirect", "redirect");
 
@@ -88,6 +90,7 @@ Route::controller(HomeController::class)->group(function () {
 
     // show one
     Route::get("user/product/show/{id}", "show")->name("Show");
+
 
     // Search
     Route::get("search", "search");
