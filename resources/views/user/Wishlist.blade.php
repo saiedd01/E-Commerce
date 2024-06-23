@@ -25,7 +25,6 @@
                                     <th class="border-bottom-0">Name</th>
                                     <th class="border-bottom-0">Product</th>
                                     <th class="border-bottom-0">Price</th>
-                                    <th class="border-bottom-0">Quantity</th>
                                     <th class="border-bottom-0">Image</th>
                                     <th class="border-bottom-0">action</th>
                                 </tr>
@@ -57,29 +56,15 @@
                                                 </h6>
                                             @endif
                                         </td>
-                                        <td>{{ $cart->quantity }}</td>
                                         <td><img src="{{ asset('storage/' . $cart->product->image) }}"
                                                 alt="{{ $cart->product->name }}" style="width: 40px; "></a></td>
                                         <td>
-                                            <div class="dropdown">
-                                                <button aria-expanded="false" aria-haspopup="true"
-                                                    class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
-                                                    type="button">actions<i class="fas fa-caret-down ml-1"></i></button>
-                                                <div class="dropdown-menu tx-13">
-                                                    {{-- Edit Product --}}
-                                                    <a class="dropdown-item" href="{{ url("cart/edit/$cart->id") }}"><i
-                                                            class="text-primary fas fa-edit"></i>&nbsp;&nbsp;
-                                                        Edit
-                                                    </a>
-                                                    {{-- delete product --}}
-                                                    <a class="dropdown-item" href="#" data-id="{{ $cart->id }}"
-                                                        data-toggle="modal"
-                                                        data-target="#delete_product_{{ $cart->id }}"><i
-                                                            class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;
-                                                        Delete
-                                                    </a>
-                                                    </button>
-                                                </div>
+                                            {{-- delete product --}}
+                                            <a class="dropdown-item" href="#" data-id="{{ $cart->id }}"
+                                                data-toggle="modal" data-target="#delete_product_{{ $cart->id }}"><i
+                                                    class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;
+                                                Remove
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

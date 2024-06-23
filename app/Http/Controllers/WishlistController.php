@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -31,5 +32,27 @@ class WishlistController extends Controller
             // If not authenticated, redirect to login page
             return view("auth.login");
         }
+    }
+
+    public function addToWishlist(Request $request, $id)
+    {
+        // Find product by ID
+        $product_id = Product::findOrFail($id);
+
+        // Get user ID
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        // Create new cart item
+        $data = new Wishlist();
+        $data->product_id = $product_id->id;
+        $data->user_id = $user_id;
+
+        // Save cart item
+        $data->save();
+
+        // Flash success message and redirect back
+        session()->flash("success", "Add product to Wishlist Successfully");
+        return redirect()->back();
     }
 }

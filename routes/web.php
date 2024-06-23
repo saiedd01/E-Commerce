@@ -132,10 +132,10 @@ Route::middleware("verified", "auth")->group(function () {
         Route::get("wishlist", "index");
 
         // Add to Wishlist
-        Route::post("add_to_wishlist/{id}", "addToWhislist");
+        Route::post("add_to_wishlist/{id}", "addToWishlist");
 
         //delete form Wishlist
-        Route::post("cart/delete/{id}", "delete_Wishlist");
+        Route::post("wishlist/delete/{id}", "delete_Wishlist");
     });
 });
 
