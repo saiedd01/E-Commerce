@@ -35,8 +35,14 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link cart-link" href="{{ url('MyCart') }}">
-                            {{ __('message.Cart') }}
-                            <span class="cart-count">{{ $count }}</span>
+                            Cart
+                            <span class="cart-count">{{ $countCart }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-link" href="{{ url('wishlist') }}">
+                            Favourite
+                            <span class="cart-count">{{ $countWishlist }}</span>
                         </a>
                     </li>
                     @if (session()->has('lang') && session()->get('lang') == 'ar')

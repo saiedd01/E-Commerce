@@ -19,8 +19,10 @@ class ProductResource extends JsonResource
             'Name' => $this->name,
             'Description' => $this->desc,
             'Price' => $this->price,
+            'Discount' => $this->Discount,
             'Quantity' => $this->quantity,
             'Image' => asset("storage")."/".$this->image,
+            "qr_code" => asset("storage")."/".$this->qr_code,
         ];
     }
 }

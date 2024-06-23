@@ -4,6 +4,7 @@ use App\Http\Controllers\ArchiveProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -106,19 +107,35 @@ Route::controller(HomeController::class)->group(function () {
         // Edit in Cart Product
         Route::get("cart/edit/{id}", "editCart");
 
-        // Update
+        // Update Cart
         Route::post("cart/update/{id}", "updateCart");
-
-        // Confirm Order
-        Route::post("confirm_order", "Confirm_Order");
 
         //delete form cart
         Route::post("cart/delete/{id}", "delete_Cart");
 
+        // Confirm Order
+        Route::post("confirm_order", "Confirm_Order");
+
         // Make review
-        Route::post("submit_review","review");
+        Route::post("submit_review", "review");
+
         //logout
         Route::get("logout", "logout");
+    });
+});
+
+
+Route::middleware("verified", "auth")->group(function () {
+    Route::controller(WishlistController::class)->group(function () {
+
+        // Wishlist Page
+        Route::get("wishlist", "index");
+
+        // Add to Wishlist
+        Route::post("add_to_wishlist/{id}", "addToWhislist");
+
+        //delete form Wishlist
+        Route::post("cart/delete/{id}", "delete_Wishlist");
     });
 });
 

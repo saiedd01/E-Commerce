@@ -58,7 +58,7 @@ class ProductController extends Controller
 
         // Generate QR Code
         $productDetailUrl = route('Show', ['id' => $product->id]);
-        QrCode::format('png')->generate($productDetailUrl, $qrCodePath);
+        QrCode::format('png')->size(200)->generate($productDetailUrl, $qrCodePath);
 
         // Update product with QR Code path relative to storage/app/public/
         $product->update(['qr_code' => 'qrcodes/' . $product->id . '.png']);

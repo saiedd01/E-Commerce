@@ -47,6 +47,15 @@ class User extends Authenticatable
 
         return 0; // Default to 0 if not authenticated
     }
+    public static function getWishlistCount()
+    {
+        if (Auth::check()) { // Use Auth::check() for simpler logic
+            $user = Auth::user();
+            return Wishlist::where("user_id", $user->id)->count();
+        }
+
+        return 0; // Default to 0 if not authenticated
+    }
 
     public function orders()
     {

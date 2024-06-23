@@ -17,6 +17,8 @@ class ApiAuthController extends Controller
             "name" => "required|string|max:200",
             "email" => "required|email|unique:users,email",
             "password" => "required|min:8|confirmed",
+            // "phone" => "require|string|'regex:/^[0-9]{11,15}$/'",
+            "Address"=>"required|string|max:255",
         ]);
 
         // check
@@ -34,6 +36,8 @@ class ApiAuthController extends Controller
         User::create([
             "name"=>$request->name,
             "email"=>$request->email,
+            "phone"=>$request->phone,
+            "Address"=>$request->Address,
             "password"=>$passwordHash,
             "access_token"=>$access_token
         ]);

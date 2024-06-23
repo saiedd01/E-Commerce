@@ -23,9 +23,11 @@ class HomeController extends Controller
             $products = Product::paginate(6);
 
             // call function Count
-            $count = User::getCartCount();
+            $countCart = User::getCartCount();
+
+            $countWishlist = User::getWishlistCount();
             // Return view with products and cart count
-            return view("user.all", compact("products", "count"));
+            return view("user.all", compact("products", "countCart","countWishlist"));
         }
     }
 
@@ -35,10 +37,12 @@ class HomeController extends Controller
         $products = Product::paginate(6);
 
         // call function Count
-        $count = User::getCartCount();
+        $countCart = User::getCartCount();
+
+        $countWishlist = User::getWishlistCount();
 
         // Return view with products and cart count
-        return view("user.all", compact("products", "count"));
+        return view("user.all", compact("products", "countCart","countWishlist"));
     }
 
     public function show($id)
@@ -47,16 +51,20 @@ class HomeController extends Controller
         $product = Product::findOrFail($id);
 
         // call function Count
-        $count = User::getCartCount();
+        $countCart = User::getCartCount();
+
+        $countWishlist = User::getWishlistCount();
 
         // Return view with product and cart count
-        return view("user.show", compact("product", "count"));
+        return view("user.show", compact("product", "countCart","countWishlist"));
     }
 
     public function search(Request $request)
     {
         // call function Count
-        $count = User::getCartCount();
+        $countCart = User::getCartCount();
+
+        $countWishlist = User::getWishlistCount();
 
         // Get search key from request
         $search = $request->key;
@@ -71,7 +79,7 @@ class HomeController extends Controller
             return redirect()->back();
         } else {
             // If products found, return view with products
-            return view("user.all", compact("products", "count"));
+            return view("user.all", compact("products", "countCart" , "countWishlist"));
         }
     }
 
@@ -113,11 +121,14 @@ class HomeController extends Controller
             // Get user and cart count
             $user = Auth::user();
             $user_id = $user->id;
-            $count = Cart::where("user_id", $user_id)->count();
+
+            $countCart = User::getCartCount();
+
+            $countWishlist = User::getWishlistCount();
             // Get user's carts
             $carts = Cart::where('user_id', "$user_id")->get();
             // Return view with carts and cart count
-            return view("user.Cart", compact('carts', "count", "user"));
+            return view("user.Cart", compact('carts', "countCart", "countWishlist", "user"));
         } else {
             // If not authenticated, redirect to login page
             return view("auth.login");
@@ -191,11 +202,13 @@ class HomeController extends Controller
     public function editCart($id)
     {
         // call function Count
-        $count = User::getCartCount();
+        $countCart = User::getCartCount();
+
+        $countWishlist = User::getWishlistCount();
 
         $cart = Cart::findorfail($id);
         // $product = Product::findorFail($id);
-        return view("user.editCart", compact("cart", "count"));
+        return view("user.editCart", compact("cart", "countCart","countWishlist"));
     }
 
     public function updateCart(Request $request, $id)
@@ -220,17 +233,18 @@ class HomeController extends Controller
         return redirect('MyCart');
     }
 
-    public function review(Request $request){
+    public function review(Request $request)
+    {
         $data = $request->validate([
-            "rating"=>'required|integer|min:1|max:5',
-            "review"=>"required|string",
+            "rating" => 'required|integer|min:1|max:5',
+            "review" => "required|string",
         ]);
-        
+
         $data["product_id"] = $request->id;
         $data["user_id"] = Auth::user()->id;
 
         Review::create($data);
-        session()->flash("success","your Reviwe is submitted successfully");
+        session()->flash("success", "your Reviwe is submitted successfully");
         return redirect()->back();
     }
     public function logout()

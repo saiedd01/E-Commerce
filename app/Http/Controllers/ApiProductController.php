@@ -51,6 +51,7 @@ class ApiProductController extends Controller
             "desc"=>$request->desc,
             "price"=>$request->price,
             "quantity"=>$request->quantity,
+            "Discount"=>$request->Discount,
             "image"=>$imageName,
             "category_id"=>$request->category_id,
         ]);
@@ -93,6 +94,7 @@ class ApiProductController extends Controller
                 "desc"=>$request->desc,
                 "price"=>$request->price,
                 "quantity"=>$request->quantity,
+                "Discount"=>$request->Discount,
                 "image"=>$imageName,
                 "category_id"=>$request->category_id,
             ]);

@@ -16,7 +16,7 @@
             @if ($product->qr_code)
                 <div>
                     <h3>QR Code</h3>
-                    <img src="{{ asset("storage/$product->qr_code") }}" alt="QR Code for {{ $product->name }}">
+                    <img src="{{ asset("storage/$product->qr_code") }}" alt="QR Code for {{ $product->name }}" style="width: 200px;">
                 </div>
             @endif
             <p>{{ __('message.Product Price') }}: {{ $product->price }}</p>
