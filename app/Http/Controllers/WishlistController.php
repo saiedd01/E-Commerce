@@ -55,4 +55,17 @@ class WishlistController extends Controller
         session()->flash("success", "Add product to Wishlist Successfully");
         return redirect()->back();
     }
+
+    public function delete_Wishlist($id)
+    {
+        // Find cart item by ID
+        $item = Wishlist::findOrFail($id);
+
+        // Delete cart item
+        $item->Forcedelete();
+
+        // Flash success message and redirect back
+        session()->flash("success", "delete Item from Cart Successfully");
+        return redirect()->back();
+    }
 }

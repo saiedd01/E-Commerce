@@ -79,7 +79,7 @@
 
 
 {{-- delete modal  --}}
-{{-- @foreach ($carts as $cart)
+@foreach ($items as $cart)
     <div class="modal fade" id="delete_product_{{ $cart->id }}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -90,7 +90,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url("cart/delete/$cart->id") }}"method="post">
+                <form action="{{ url("wishlist/delete/$cart->id") }}"method="post">
                     @csrf
                     <div class="modal-body">
                         <p class="text-center">
@@ -105,7 +105,7 @@
             </div>
         </div>
     </div>
-@endforeach --}}
+@endforeach
 
 
 
