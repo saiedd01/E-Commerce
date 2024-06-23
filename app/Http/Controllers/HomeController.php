@@ -149,9 +149,6 @@ class HomeController extends Controller
 
         $phone = $request->input("phone");
         $address = $request->input("address");
-        // // Get phone and address after validation
-        // $Phone = $data["phone"];
-        // $Address = $data["address"];
 
         $user = Auth::user();
         $user_id = $user->id;
