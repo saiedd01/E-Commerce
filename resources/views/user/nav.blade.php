@@ -36,13 +36,17 @@
                     <li class="nav-item">
                         <a class="nav-link cart-link" href="{{ url('MyCart') }}">
                             Cart
-                            <span class="cart-count">{{ $countCart }}</span>
+                            @if ($countCart > 0)
+                                <span class="cart-count">{{ $countCart }}</span>
+                            @endif
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link cart-link" href="{{ url('wishlist') }}">
                             Favourite
-                            <span class="cart-count">{{ $countWishlist }}</span>
+                            @if ($countWishlist > 0)
+                                <span class="cart-count">{{ $countWishlist }}</span>
+                            @endif
                         </a>
                     </li>
                     @if (session()->has('lang') && session()->get('lang') == 'ar')
@@ -63,7 +67,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @auth
                                     {{-- <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a> --}}
-                                    <a class="dropdown-item" href="{{ url("/logout") }}">logout</a>
+                                    <a class="dropdown-item" href="{{ url('/logout') }}">logout</a>
                                 @else
                                     <a class="dropdown-item" href="{{ route('login') }}">Log in</a>
                                     @if (Route::has('register'))

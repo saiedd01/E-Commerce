@@ -27,7 +27,7 @@ class HomeController extends Controller
 
             $countWishlist = User::getWishlistCount();
             // Return view with products and cart count
-            return view("user.all", compact("products", "countCart","countWishlist"));
+            return view("user.all", compact("products", "countCart", "countWishlist"));
         }
     }
 
@@ -42,7 +42,7 @@ class HomeController extends Controller
         $countWishlist = User::getWishlistCount();
 
         // Return view with products and cart count
-        return view("user.all", compact("products", "countCart","countWishlist"));
+        return view("user.all", compact("products", "countCart", "countWishlist"));
     }
 
     public function show($id)
@@ -56,7 +56,7 @@ class HomeController extends Controller
         $countWishlist = User::getWishlistCount();
 
         // Return view with product and cart count
-        return view("user.show", compact("product", "countCart","countWishlist"));
+        return view("user.show", compact("product", "countCart", "countWishlist"));
     }
 
     public function search(Request $request)
@@ -79,7 +79,7 @@ class HomeController extends Controller
             return redirect()->back();
         } else {
             // If products found, return view with products
-            return view("user.all", compact("products", "countCart" , "countWishlist"));
+            return view("user.all", compact("products", "countCart", "countWishlist"));
         }
     }
 
@@ -137,52 +137,64 @@ class HomeController extends Controller
 
     public function Confirm_Order(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             "phone" => "required|string|regex:/^[0-9]{11,15}$/",
             "address" => "required|string|max:255",
         ], [
-            "phone.required" => "Please Enter Phone Number",
-            "phone.regex" => "Please Enter Phone Number Correct",
-            "address.required" => "Please Enter Address",
-            "address.string" => "Please Enter Address Correct",
+            "phone.required" => "Please enter a phone number.",
+            "phone.regex" => "Please enter a valid phone number.",
+            "address.required" => "Please enter an address.",
+            "address.string" => "Please enter a valid address.",
         ]);
 
-        // Get phone and address after validation
-        $Phone = $data["phone"];
-        $Address = $data["address"];
+        $phone = $request->input("phone");
+        $address = $request->input("address");
+        // // Get phone and address after validation
+        // $Phone = $data["phone"];
+        // $Address = $data["address"];
 
-        // Get user ID
         $user = Auth::user();
         $user_id = $user->id;
 
         // Get user's carts
-        $carts = Cart::where('user_id', "$user_id")->get();
+        $carts = Cart::where('user_id', $user_id)->get();
 
-        // Create order for each cart item
+        if ($carts->isEmpty()) {
+            return redirect()->back()->withErrors('No items in cart.');
+        }
+
         foreach ($carts as $cart) {
+            $product = Product::findOrFail($cart->product_id);
+
+            if ($product->quantity < $cart->quantity) {
+                // Handle insufficient quantity scenario
+                session()->flash("error", "Insufficient stock for {$product->name}.");
+                return redirect()->back();
+            }
+
+            // Create order
             $order = new Order();
-            $order->Address = $Address;
-            $order->Phone = $Phone;
-            $order->Address = $Address;
             $order->user_id = $user_id;
             $order->product_id = $cart->product_id;
-            $order->total = $cart->total;
             $order->quantity = $cart->quantity;
+            $order->total = $cart->total;
+            $order->Address = $address;
+            $order->Phone = $phone;
             $order->Payment_status = "Cash";
             $order->Value_Status = "3";
             $order->Status = "In Progress";
             $order->save();
+
+            // Update product quantity
+            $product->quantity -= $cart->quantity;
+            $product->save();
         }
 
         // Delete carts after placing order
-        $empty_cart = Cart::where('user_id', "$user_id")->get();
-        foreach ($empty_cart as $empty) {
-            $data = Cart::find($empty->id);
-            $data->delete();
-        }
+        Cart::where('user_id', $user_id)->delete();
 
         // Flash success message and redirect back
-        session()->flash("success", "Order Successfully");
+        session()->flash("success", "Order successfully placed.");
         return redirect()->back();
     }
 
@@ -208,7 +220,7 @@ class HomeController extends Controller
 
         $cart = Cart::findorfail($id);
         // $product = Product::findorFail($id);
-        return view("user.editCart", compact("cart", "countCart","countWishlist"));
+        return view("user.editCart", compact("cart", "countCart", "countWishlist"));
     }
 
     public function updateCart(Request $request, $id)
