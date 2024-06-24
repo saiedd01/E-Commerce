@@ -111,10 +111,10 @@ class ProductController extends Controller
     public function allOrder()
     {
         // Retrieve all orders
-        $orders = Order::all();
+        $orders = Order::paginate(10);
 
         // Return view with orders data
-        return view("admin.Proudcts.AllOrder", compact("orders"));
+        return view("admin.Orders.AllOrder", compact("orders"));
     }
 
     public function onTheWay($id)
@@ -161,6 +161,23 @@ class ProductController extends Controller
         session()->flash("success", "Order cancelled!");
         return redirect(url("product/AllOrder"));
     }
+
+    public function OrderDelivered(){
+        $orders = Order::where('Value_Status', 1)->get();
+        return view('admin.Orders.OrderDelivery', compact('orders'));
+    }
+
+    public function OrderOnTheWay(){
+        $orders = Order::where('Value_Status', 2)->get();
+        return view('admin.Orders.OrderOnTheWay', compact('orders'));
+    }
+
+    public function OrderInProgress(){
+        $orders = Order::where('Value_Status', 3)->get();
+        return view('admin.Orders.OrderInProgress', compact('orders'));
+    }
+
+
 
     public function users()
     {

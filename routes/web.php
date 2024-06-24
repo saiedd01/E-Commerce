@@ -50,6 +50,15 @@ Route::middleware("is_admin", "auth")->group(function () {
         Route::get("products/Delivered/{id}", "delivered");
         Route::post("products/Cancelled/{id}", "cancelled");
 
+        // Show OrderDelivered Page
+        Route::get("product/OrderDelivered", "OrderDelivered");
+
+        // Show OnTheWayOrders Page
+        Route::get("product/OrderOnTheWay", "OrderOnTheWay");
+
+        // Show OrderInProgress Page
+        Route::get("product/OrderInProgress", "OrderInProgress");
+
         Route::get("allUsers", "users");
         Route::get("user/orders/{id}", "userOrders");
 

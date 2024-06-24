@@ -126,12 +126,30 @@
                  </a>
              </li>
              <li class="nav-item menu-items">
-                 <a class="nav-link" href="{{ url('product/AllOrder') }}">
+                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                     data-target="#ordersDropdown" aria-controls="ordersDropdown">
                      <span class="menu-icon">
                          <i class="fas fa-clipboard-list" style="color: #cbbb0b;"></i>
                      </span>
                      <span class="menu-title">All Orders</span>
+                     <i class="menu-arrow"></i>
                  </a>
+                 <div class="collapse" id="ordersDropdown">
+                     <ul class="nav flex-column sub-menu">
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ url('product/AllOrder') }}">All Orders</a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ url('product/OrderDelivered') }}">Order Delivered</a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ url('product/OrderOnTheWay') }}">Order on The Way</a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ url('product/OrderInProgress') }}">In Progress</a>
+                         </li>
+                     </ul>
+                 </div>
              </li>
          </ul>
      </nav>
