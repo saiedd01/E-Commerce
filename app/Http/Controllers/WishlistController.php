@@ -27,7 +27,7 @@ class WishlistController extends Controller
             $items = Wishlist::where('user_id', "$user_id")->get();
 
             // Return view with carts and cart count
-            return view("user.Wishlist", compact('items', "countCart","countWishlist", "user"));
+            return view("user.Wishlist", compact('items', "countCart", "countWishlist", "user"));
         } else {
             // If not authenticated, redirect to login page
             return view("auth.login");
@@ -65,7 +65,7 @@ class WishlistController extends Controller
         $item->Forcedelete();
 
         // Flash success message and redirect back
-        session()->flash("success", "delete Item from Cart Successfully");
+        session()->flash("success", "delete Item from Wishlist Successfully");
         return redirect()->back();
     }
 }

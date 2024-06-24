@@ -162,17 +162,20 @@ class ProductController extends Controller
         return redirect(url("product/AllOrder"));
     }
 
-    public function OrderDelivered(){
+    public function OrderDelivered()
+    {
         $orders = Order::where('Value_Status', 1)->get();
         return view('admin.Orders.OrderDelivery', compact('orders'));
     }
 
-    public function OrderOnTheWay(){
+    public function OrderOnTheWay()
+    {
         $orders = Order::where('Value_Status', 2)->get();
         return view('admin.Orders.OrderOnTheWay', compact('orders'));
     }
 
-    public function OrderInProgress(){
+    public function OrderInProgress()
+    {
         $orders = Order::where('Value_Status', 3)->get();
         return view('admin.Orders.OrderInProgress', compact('orders'));
     }
