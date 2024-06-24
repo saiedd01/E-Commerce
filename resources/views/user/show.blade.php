@@ -34,15 +34,15 @@
                 </p>
                 <form method="POST" action="{{ url("add_to_cart/$product->id") }}">
                     @csrf
-                    <div class="row">
-                        <div class="d-flex justify-content-center" style="margin-left: 20px">
-                            <input type="number" name="quantity" value="1" min="1" style="width:100px">
-                        </div>
-                        <div class="d-flex justify-content-center" style="margin-left: 15px">
-                            <button type="submit" class="btn btn-primary">Add To Cart</button>
-                        </div>
+                    <div class="form-group text-center">
+                        <input type="number" name="quantity" value="1" min="1"
+                            class="form-control d-inline-block"
+                            style="width: 80px; display: inline-block; margin-right: 10px;">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Add To Cart</button>
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-2 text-center">
                         @if ($product->quantity > 0)
                             <span class="text-success small">In Stock</span>
                         @else
@@ -55,19 +55,14 @@
                     <div class="col">
                         <button class="btn btn-outline-success btn-sm btn-block" data-id="{{ $product->id }}"
                             data-name="{{ $product->name }}" data-toggle="modal" data-target="#review_Product">
-                            <i class="far fa-comment" width="16" height="16" viewBox="0 0 16 16"></i> <!-- Adjust the Font Awesome class here -->
-                            &nbsp;Make Review <!-- Add a non-breaking space for spacing -->
+                            <i class="fas fa-comment"></i> Make Review
                         </button>
                     </div>
                     <div class="col">
                         <form method="POST" action="{{ url("add_to_wishlist/$product->id") }}">
                             @csrf
-                            <button type="submit" class="btn btn-outline-danger btn-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-heart" viewBox="0 0 16 16">
-                                    <path
-                                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                                </svg> Add to Wishlist
+                            <button type="submit" class="btn btn-outline-danger btn-sm btn-block">
+                                <i class="fas fa-heart"></i> Add to Wishlist
                             </button>
                         </form>
                     </div>

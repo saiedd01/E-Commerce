@@ -52,6 +52,9 @@ Route::middleware("is_admin", "auth")->group(function () {
 
         Route::get("allUsers", "users");
         Route::get("user/orders/{id}", "userOrders");
+
+        // Search User
+        Route::GET('search/user','SearchUser');
     });
 });
 

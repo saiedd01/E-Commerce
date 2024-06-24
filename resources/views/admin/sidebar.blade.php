@@ -78,7 +78,7 @@
                  <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
                      data-target="#productsDropdown" aria-controls="productsDropdown">
                      <span class="menu-icon">
-                         <i class="text-primary fas fa-eye"></i>
+                         <i class="fas fa-box-open text-primary"></i>
                      </span>
                      <span class="menu-title">Products</span>
                      <i class="menu-arrow"></i>
@@ -99,14 +99,14 @@
              </li>
              <li class="nav-item menu-items">
                  <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
-                     data-target="#productsDropdown" aria-controls="productsDropdown">
+                     data-target="#categoriesDropdown" aria-controls="categoriesDropdown">
                      <span class="menu-icon">
-                         <i class="text-success fas fa-eye"></i>
+                         <i class="fas fa-tags text-success"></i>
                      </span>
                      <span class="menu-title">Categories</span>
                      <i class="menu-arrow"></i>
                  </a>
-                 <div class="collapse" id="productsDropdown">
+                 <div class="collapse" id="categoriesDropdown">
                      <ul class="nav flex-column sub-menu">
                          <li class="nav-item">
                              <a class="nav-link" href="{{ url('categories') }}">All Categories</a>
@@ -120,9 +120,17 @@
              <li class="nav-item menu-items">
                  <a class="nav-link" href="{{ url('allUsers') }}">
                      <span class="menu-icon">
-                         <i class="fa-solid fa-user" style="color: #0fd7bf;"></i>
+                         <i class="fas fa-user-friends" style="color: #0fd7bf;"></i>
                      </span>
                      <span class="menu-title">Users</span>
+                 </a>
+             </li>
+             <li class="nav-item menu-items">
+                 <a class="nav-link" href="{{ url('product/AllOrder') }}">
+                     <span class="menu-icon">
+                         <i class="fas fa-clipboard-list" style="color: #cbbb0b;"></i>
+                     </span>
+                     <span class="menu-title">All Orders</span>
                  </a>
              </li>
          </ul>

@@ -31,7 +31,10 @@
                         {{ $product->quantity }}
                     </td>
                     <td width="20%">
-                        <img src="{{ asset("storage/$product->image") }}" alt="" style="width: 30%; height: auto;">
+                        <a class="dropdown-item" href="{{ url("products/show/$product->id") }}">
+                            <img src="{{ asset("storage/$product->image") }}" alt=""
+                                style="width: 30%; height: auto;">
+                        </a>
                     </td>
                     <td>
                         <div class="dropdown">

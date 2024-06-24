@@ -165,7 +165,7 @@ class ProductController extends Controller
     public function users()
     {
         // Retrieve all users with role 0
-        $users = User::where("role", '0')->get();
+        $users = User::where("role", '0')->paginate(10);
 
         // Return view with users data
         return view("admin.allUsers", compact("users"));
@@ -181,5 +181,28 @@ class ProductController extends Controller
 
         // Return view with user and orders data
         return view("admin.userOrders", compact("user", "orders"));
+    }
+
+    public function SearchUser(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'key' => 'required|string',
+        ]);
+
+        // Get search key from request
+        $search = $request->key;
+
+        // Search users by name
+        $users = User::where("name", 'like', "%$search%")->paginate(6)->withQueryString();
+
+        // Check if users found
+        if ($users->isEmpty()) {
+            // If no users found, flash error message and redirect back
+            session()->flash('error', 'User Not Found');
+            return view("admin.allUsers", compact("users"));
+        } else {
+            return view('admin.allUsers', compact('users'));
+        }
     }
 }
