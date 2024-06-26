@@ -20,14 +20,25 @@
                         </div>
                     @endif
                     {{-- Search --}}
-                    <form action="{{ url('search') }}" method="get">
-                        <div class="d-flex justify-content">
-                            <input type="" name ="key" class="mb-2">
-                        </div>
-                        <div class="d-flex justify-content">
-                            <button type="submit" class="btn btn-primary">Search</button>
+                    <form action="{{ url('search') }}" method="get" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" name="key" class="form-control" placeholder="Search..."
+                                aria-label="Search" aria-describedby="button-search">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit" id="button-search">Search</button>
+                            </div>
                         </div>
                     </form>
+                    <div class="d-flex justify-content-between">
+                        <div class="btn-group" role="group" aria-label="Sort by Title">
+                            <a href="{{ url('sort?by=title&order=asc') }}" class="btn btn-outline-secondary">Title ASC</a>
+                            <a href="{{ url('sort?by=title&order=desc') }}" class="btn btn-outline-secondary">Title DESC</a>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Sort by Price">
+                            <a href="{{ url('sort?by=price&order=asc') }}" class="btn btn-outline-secondary">Price ASC</a>
+                            <a href="{{ url('sort?by=price&order=desc') }}" class="btn btn-outline-secondary">Price DESC</a>
+                        </div>
+                    </div>
                 </div>
                 @foreach ($products as $product)
                     <div class="col-md-4">
@@ -41,7 +52,7 @@
                                 <a href="{{ route('Show', ['id' => $product->id]) }}">
                                     <h4>{{ $product->name }}</h4>
                                 </a>
-                                @if ($product->Discount != 0.00)
+                                @if ($product->Discount != 0.0)
                                     <h5 style="color: green;">
                                         $@php
                                             $priceAfterDiscount = $product->price - $product->Discount;

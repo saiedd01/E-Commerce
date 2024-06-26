@@ -256,6 +256,28 @@ class HomeController extends Controller
         session()->flash("success", "your Reviwe is submitted successfully");
         return redirect()->back();
     }
+
+    public function sort(Request $request)
+    {
+        $sortBy = $request->query('by', 'name'); // Default sorting by name
+        $sortOrder = $request->query('order', 'asc'); // Default sorting order ascending
+
+        $query = Product::query();
+
+        // Apply sorting based on the query parameters
+        if ($sortBy && $sortOrder) {
+            $query->orderBy($sortBy, $sortOrder);
+        }
+
+        $products = $query->paginate(6);
+
+        // call function Count
+        $countCart = User::getCartCount();
+
+        $countWishlist = User::getWishlistCount();
+
+        return view("user.all", compact("products", "countCart", "countWishlist"));
+    }
     public function logout()
     {
         $userId = Auth::id();  // Retrieve user ID before logging out
