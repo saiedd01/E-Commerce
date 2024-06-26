@@ -15,6 +15,7 @@
         font-size: 12px;
         font-weight: bold;
     }
+
 </style>
 <header class="">
     <nav class="navbar navbar-expand-lg">
@@ -35,7 +36,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link cart-link" href="{{ url('MyCart') }}">
-                            Cart
+                            Cart <i class="fa fa-cart-shopping"></i>
                             @if ($countCart > 0)
                                 <span class="cart-count">{{ $countCart }}</span>
                             @endif
@@ -43,7 +44,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link cart-link" href="{{ url('wishlist') }}">
-                            Favourite
+                            Favourite <i class="fas fa-heart"></i>
                             @if ($countWishlist > 0)
                                 <span class="cart-count">{{ $countWishlist }}</span>
                             @endif

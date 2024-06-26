@@ -32,18 +32,21 @@
                     {{-- Sort Form --}}
                     <form action="{{ url('sort') }}" method="post" class="mb-4">
                         @csrf
-                        <div class="d-flex justify-content-between">
-                            <div class="btn-group" role="group" aria-label="Sort by Name">
-                                <button type="submit" name="sort" value="name_asc"
-                                    class="btn btn-outline-secondary">Name ASC</button>
-                                <button type="submit" name="sort" value="name_desc"
-                                    class="btn btn-outline-secondary">Name DESC</button>
-                            </div>
-                            <div class="btn-group" role="group" aria-label="Sort by Price">
-                                <button type="submit" name="sort" value="price_asc"
-                                    class="btn btn-outline-secondary">Price ASC</button>
-                                <button type="submit" name="sort" value="price_desc"
-                                    class="btn btn-outline-secondary">Price DESC</button>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Sort Options
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="sortDropdown">
+                                <button class="dropdown-item" type="submit" name="sort" value="name_asc">Name
+                                    ASC</button>
+                                <button class="dropdown-item" type="submit" name="sort" value="name_desc">Name
+                                    DESC</button>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item" type="submit" name="sort" value="price_asc">Price
+                                    ASC</button>
+                                <button class="dropdown-item" type="submit" name="sort" value="price_desc">Price
+                                    DESC</button>
                             </div>
                         </div>
                     </form>
@@ -60,6 +63,7 @@
                                 <a href="{{ route('Show', ['id' => $product->id]) }}">
                                     <h4>{{ $product->name }}</h4>
                                 </a>
+                                <p>{{ $product->desc }}</p>
                                 @if ($product->Discount != 0.0)
                                     <h5 style="color: green;">
                                         $@php
@@ -75,7 +79,6 @@
                                         ${{ $product->price }}
                                     </h6>
                                 @endif
-                                <p>{{ $product->desc }}</p>
                                 <ul class="stars">
                                     <li><i class="fa fa-star"></i></li>
                                     <li><i class="fa fa-star"></i></li>

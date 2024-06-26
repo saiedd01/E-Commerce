@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
         rel="stylesheet">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://kit.fontawesome.com/your-kit-id.css" rel="stylesheet">
+
     @yield('title')
 
     <!-- Bootstrap core CSS -->
