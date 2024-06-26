@@ -133,7 +133,7 @@ Route::controller(HomeController::class)->group(function () {
 
     // Search
     Route::get("search", "search");
-    Route::get("sort", "sort");
+    Route::post("sort", "sort");
 
     Route::middleware("auth", "verified")->group(function () {
 

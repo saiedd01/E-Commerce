@@ -259,18 +259,32 @@ class HomeController extends Controller
 
     public function sort(Request $request)
     {
-        $sortBy = $request->query('by', 'name'); // Default sorting by name
-        $sortOrder = $request->query('order', 'asc'); // Default sorting order ascending
+        $sortBy = 'name'; // Default sorting by name
+        $sortOrder = 'asc'; // Default sorting order ascending
 
-        $query = Product::query();
-
-        // Apply sorting based on the query parameters
-        if ($sortBy && $sortOrder) {
-            $query->orderBy($sortBy, $sortOrder);
+        // Determine sorting parameters based on the sort value
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'name_asc':
+                    $sortBy = 'name';
+                    $sortOrder = 'asc';
+                    break;
+                case 'name_desc':
+                    $sortBy = 'name';
+                    $sortOrder = 'desc';
+                    break;
+                case 'price_asc':
+                    $sortBy = 'price';
+                    $sortOrder = 'asc';
+                    break;
+                case 'price_desc':
+                    $sortBy = 'price';
+                    $sortOrder = 'desc';
+                    break;
+            }
         }
 
-        $products = $query->paginate(6);
-
+        $products = Product::orderBy($sortBy, $sortOrder)->paginate(6);
         // call function Count
         $countCart = User::getCartCount();
 

@@ -29,16 +29,24 @@
                             </div>
                         </div>
                     </form>
-                    <div class="d-flex justify-content-between">
-                        <div class="btn-group" role="group" aria-label="Sort by Title">
-                            <a href="{{ url('sort?by=title&order=asc') }}" class="btn btn-outline-secondary">Title ASC</a>
-                            <a href="{{ url('sort?by=title&order=desc') }}" class="btn btn-outline-secondary">Title DESC</a>
+                    {{-- Sort Form --}}
+                    <form action="{{ url('sort') }}" method="post" class="mb-4">
+                        @csrf
+                        <div class="d-flex justify-content-between">
+                            <div class="btn-group" role="group" aria-label="Sort by Name">
+                                <button type="submit" name="sort" value="name_asc"
+                                    class="btn btn-outline-secondary">Name ASC</button>
+                                <button type="submit" name="sort" value="name_desc"
+                                    class="btn btn-outline-secondary">Name DESC</button>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="Sort by Price">
+                                <button type="submit" name="sort" value="price_asc"
+                                    class="btn btn-outline-secondary">Price ASC</button>
+                                <button type="submit" name="sort" value="price_desc"
+                                    class="btn btn-outline-secondary">Price DESC</button>
+                            </div>
                         </div>
-                        <div class="btn-group" role="group" aria-label="Sort by Price">
-                            <a href="{{ url('sort?by=price&order=asc') }}" class="btn btn-outline-secondary">Price ASC</a>
-                            <a href="{{ url('sort?by=price&order=desc') }}" class="btn btn-outline-secondary">Price DESC</a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 @foreach ($products as $product)
                     <div class="col-md-4">
