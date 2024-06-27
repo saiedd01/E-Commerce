@@ -39,15 +39,12 @@
                                 Recommended
                             </button>
                             <div class="dropdown-menu" aria-labelledby="sortDropdown">
-                                <button class="dropdown-item" type="submit" name="sort" value="name_asc">Name
-                                    ASC</button>
-                                <button class="dropdown-item" type="submit" name="sort" value="name_desc">Name
-                                    DESC</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" type="submit" name="sort" value="price_asc">Price: LOW TO
-                                    HIGH</button>
-                                <button class="dropdown-item" type="submit" name="sort" value="price_desc">Price: HIGH
-                                    TO LOW</button>
+                                <button class="dropdown-item {{ request('sort') == 'price_asc' ? 'active' : '' }}"
+                                    type="submit" name="sort" value="price_asc">Price: LOW TO HIGH</button>
+                                <button class="dropdown-item {{ request('sort') == 'price_desc' ? 'active' : '' }}"
+                                    type="submit" name="sort" value="price_desc">Price: HIGH TO LOW</button>
+                                <button class="dropdown-item {{ request('sort') == 'avg_review_desc' ? 'active' : '' }}"
+                                    type="submit" name="sort" value="avg_review_desc">Avg. Review</button>
                             </div>
                         </div>
                     </form>
@@ -130,3 +127,4 @@
     </div>
     {{ $products->appends(['sort' => request('sort')])->links() }}
 @endsection
+

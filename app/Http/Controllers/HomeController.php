@@ -266,14 +266,6 @@ class HomeController extends Controller
         // Determine sorting parameters based on the sort value
         if ($request->has('sort')) {
             switch ($request->sort) {
-                case 'name_asc':
-                    $sortBy = 'name';
-                    $sortOrder = 'asc';
-                    break;
-                case 'name_desc':
-                    $sortBy = 'name';
-                    $sortOrder = 'desc';
-                    break;
                 case 'price_asc':
                     $sortBy = DB::raw('price - Discount');
                     $sortOrder = 'asc';
@@ -282,11 +274,35 @@ class HomeController extends Controller
                     $sortBy = DB::raw('price - Discount');
                     $sortOrder = 'desc';
                     break;
+                case 'avg_review_desc':
+                    $sortBy = 'avg_review';
+                    $sortOrder = 'desc';
+                    break;
             }
         }
 
-        // Fetch products with sorting and pagination
-        $products = Product::orderBy($sortBy, $sortOrder)->paginate(6);
+        // Fetch products with sorting and average review calculation
+        $products = Product::select(
+            'products.*',
+            DB::raw('AVG(reviews.rating) as avg_review')
+        )
+            ->leftJoin('reviews', 'products.id', '=', 'reviews.product_id')
+            ->groupBy(
+                'products.id',
+                'products.name',
+                'products.price',
+                'products.desc',
+                'products.image',
+                'products.Discount',
+                'products.quantity',
+                'products.category_id',
+                'products.deleted_at',
+                'products.qr_code',
+                'products.created_at',
+                'products.updated_at'
+            )
+            ->orderBy($sortBy, $sortOrder)
+            ->paginate(6)->appends($request->except('page'));
 
         // Call function Count
         $countCart = User::getCartCount();
