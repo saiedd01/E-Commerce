@@ -9,6 +9,7 @@ use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -242,7 +243,7 @@ class HomeController extends Controller
         return redirect('MyCart');
     }
 
-    public function review(Request $request)
+    public function Review(Request $request)
     {
         $data = $request->validate([
             "rating" => 'required|integer|min:1|max:5',
@@ -257,7 +258,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function sort(Request $request)
+    public function Sort(Request $request)
     {
         $sortBy = 'name'; // Default sorting by name
         $sortOrder = 'asc'; // Default sorting order ascending
@@ -274,24 +275,27 @@ class HomeController extends Controller
                     $sortOrder = 'desc';
                     break;
                 case 'price_asc':
-                    $sortBy = 'price';
+                    $sortBy = DB::raw('price - Discount');
                     $sortOrder = 'asc';
                     break;
                 case 'price_desc':
-                    $sortBy = 'price';
+                    $sortBy = DB::raw('price - Discount');
                     $sortOrder = 'desc';
                     break;
             }
         }
 
+        // Fetch products with sorting and pagination
         $products = Product::orderBy($sortBy, $sortOrder)->paginate(6);
-        // call function Count
-        $countCart = User::getCartCount();
 
+        // Call function Count
+        $countCart = User::getCartCount();
         $countWishlist = User::getWishlistCount();
 
+        // Return view with products and cart count
         return view("user.all", compact("products", "countCart", "countWishlist"));
     }
+
     public function logout()
     {
         $userId = Auth::id();  // Retrieve user ID before logging out

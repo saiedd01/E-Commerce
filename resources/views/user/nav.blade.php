@@ -36,7 +36,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link cart-link" href="{{ url('MyCart') }}">
-                            Cart <i class="fa fa-cart-shopping"></i>
+                            Cart <i class="fa fa-cart-shopping" style="color:rgb(194, 12, 12);"></i>
                             @if ($countCart > 0)
                                 <span class="cart-count">{{ $countCart }}</span>
                             @endif
@@ -44,7 +44,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link cart-link" href="{{ url('wishlist') }}">
-                            Favourite <i class="fas fa-heart"></i>
+                            Favourite <i class="fas fa-heart" style="color:rgb(194, 12, 12);"></i>
                             @if ($countWishlist > 0)
                                 <span class="cart-count">{{ $countWishlist }}</span>
                             @endif

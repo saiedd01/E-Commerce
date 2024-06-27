@@ -133,7 +133,9 @@ Route::controller(HomeController::class)->group(function () {
 
     // Search
     Route::get("search", "search");
-    Route::post("sort", "sort");
+
+    // Sort
+    Route::get("sort", "Sort");
 
     Route::middleware("auth", "verified")->group(function () {
 
@@ -156,7 +158,7 @@ Route::controller(HomeController::class)->group(function () {
         Route::post("confirm_order", "Confirm_Order");
 
         // Make review
-        Route::post("submit_review", "review");
+        Route::post("submit_review", "Review");
 
         //logout
         Route::get("logout", "logout");
