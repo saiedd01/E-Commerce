@@ -225,4 +225,26 @@ class ProductController extends Controller
             return view('admin.allUsers', compact('users'));
         }
     }
+
+    public function HideReview($productId, $reviewId)
+    {
+        $review = Review::where('product_id', $productId)->findOrFail($reviewId);
+
+        // Update the visible status to 0 (hidden)
+        $review->visible = "0";
+        $review->save();
+
+        return redirect()->back();
+    }
+
+    public function ShowReview($productId, $reviewId)
+    {
+        $review = Review::where('product_id', $productId)->withTrashed()->findOrFail($reviewId);
+
+        // Update the visible status to 1 (visible)
+        $review->visible = "1";
+        $review->save();
+
+        return redirect()->back();
+    }
 }

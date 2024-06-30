@@ -8,14 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Review extends Model
 {
-    use HasFactory , SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'product_id',
         'user_id',
         'rating',
         'review',
+        "visible",
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function product()
     {

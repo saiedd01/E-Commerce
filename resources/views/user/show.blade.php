@@ -74,7 +74,7 @@
 
     <div class="container mt-4" id="reviews">
         <h2>Reviews</h2>
-        @forelse ($product->reviews as $review)
+        @forelse  ($product->reviews()->where('visible', '1')->get() as $review)
             <div class="card mt-3">
                 <div class="card-body">
                     <div class="row">

@@ -12,7 +12,8 @@
                 <div class="col-md-12">
                     <div class="section-heading">
                         <h2>{{ __('message.Latest Products') }}</h2>
-                        <a href="{{route("allProducts")}}">{{ __('message.View all products') }} <i class="fa fa-angle-right"></i></a>
+                        <a href="{{ route('allProducts') }}">{{ __('message.View all products') }} <i
+                                class="fa fa-angle-right"></i></a>
                     </div>
                     {{-- Error Msg --}}
                     @if (session('error'))
@@ -69,7 +70,7 @@
                                 <a href="{{ route('Show', ['id' => $product->id]) }}">
                                     <h4>{{ $product->name }}</h4>
                                 </a>
-                                <p>{{Str::limit($product->desc,48,"...")}}</p>
+                                <p>{{ Str::limit($product->desc, 48, '...') }}</p>
                                 <div class="price-container d-flex align-items-center" style="margin-top: -5px;">
                                     @if ($product->Discount != 0.0)
                                         <div style="display: flex; align-items: baseline;">
@@ -98,10 +99,21 @@
                                 </div>
                                 <ul class="stars">
                                     @php
-                                        $averageRating = $product->averageRating();
-                                        $fullStars = floor($averageRating);
-                                        $halfStar = $averageRating - $fullStars >= 0.5;
+                                        $visibleReviews = $product->reviews()->where('visible', '1')->get();
+                                        $averageRating = 0;
+                                        $reviewCount = $visibleReviews->count();
+
+                                        if ($reviewCount > 0) {
+                                            $averageRating = $visibleReviews->avg('rating');
+                                            $fullStars = floor($averageRating);
+                                            $halfStar = $averageRating - $fullStars >= 0.5;
+                                        } else {
+                                            // No visible reviews, set fullStars and halfStar to 0
+                                            $fullStars = 0;
+                                            $halfStar = false;
+                                        }
                                     @endphp
+
                                     @for ($i = 0; $i < 5; $i++)
                                         @if ($i < $fullStars)
                                             <li><i class="fa fa-star"></i></li>
@@ -113,8 +125,9 @@
                                         @endif
                                     @endfor
                                 </ul>
+
                                 <a href="{{ route('Show', ['id' => $product->id]) }}#reviews">
-                                    <span>{{ __('message.Reviews') }} ({{ $product->reviewCount() }})</span>
+                                    <span>{{ __('message.Reviews') }} ({{ $reviewCount }})</span>
                                 </a>
                             </div>
                         </div>
