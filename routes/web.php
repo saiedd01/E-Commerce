@@ -77,7 +77,7 @@ Route::middleware("is_admin", "auth")->group(function () {
         Route::get("user/orders/{id}", "userOrders");
 
         // Route to search for a user by name
-        Route::GET('search/user', 'SearchUser');
+        Route::get('search/user', 'SearchUser');
 
         Route::delete('/products/{productId}/reviews/{reviewId}', "HideReview")->name('products.reviews.hide');
         Route::put('/products/{productId}/reviews/{reviewId}/restore', "ShowReview")->name('products.reviews.show');

@@ -39,32 +39,48 @@
                                         <td>{{ $cart->product->name }}</td>
                                         <td>
                                             @if ($cart->product->Discount != 0.0)
-                                                <h5>
-                                                    $@php
-                                                        $priceAfterDiscount =
-                                                            $cart->product->price - $cart->product->Discount;
-                                                        echo $priceAfterDiscount;
-                                                        $total = $priceAfterDiscount * $cart->quantity;
-                                                    @endphp
-                                                </h5>
+                                                $@php
+                                                    $priceAfterDiscount =
+                                                        $cart->product->price - $cart->product->Discount;
+                                                    echo $priceAfterDiscount;
+                                                    $total = $priceAfterDiscount * $cart->quantity;
+                                                @endphp
                                             @else
-                                                <h6>
-                                                    @php
-                                                        $total = $cart->product->price * $cart->quantity;
-                                                    @endphp
-                                                    ${{ $cart->product->price }}
-                                                </h6>
+                                                @php
+                                                    $total = $cart->product->price * $cart->quantity;
+                                                @endphp
+                                                ${{ $cart->product->price }}
                                             @endif
                                         </td>
                                         <td><img src="{{ asset('storage/' . $cart->product->image) }}"
                                                 alt="{{ $cart->product->name }}" style="width: 40px; "></a></td>
                                         <td>
-                                            {{-- delete product --}}
-                                            <a class="dropdown-item" href="#" data-id="{{ $cart->id }}"
-                                                data-toggle="modal" data-target="#delete_product_{{ $cart->id }}"><i
-                                                    class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;
-                                                Remove
-                                            </a>
+                                            <div class="dropdown">
+                                                <button aria-expanded="false" aria-haspopup="true"
+                                                    class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                    type="button">actions<i class="fas fa-caret-down ml-1"></i></button>
+                                                <div class="dropdown-menu tx-13">
+                                                    {{-- Add Product To Cart --}}
+                                                    <form method="POST" action="{{ url("add_to_cart/{$cart->product->id}") }}">
+                                                        @csrf
+                                                        <div class="form-group text-center">
+                                                            <input type="number" name="quantity" value="1"
+                                                                min="1" class="form-control d-inline-block"
+                                                                style="width: 80px; display: inline-block; margin-right: 10px;">
+                                                            <button type="submit" class="btn btn-outline-primary">
+                                                                <i class="fa-solid fa-cart-shopping"></i>
+                                                                Add To Cart</button>
+                                                        </div>
+                                                    </form>
+                                                    {{-- delete product --}}
+                                                    <a class="dropdown-item" href="#" data-id="{{ $cart->id }}"
+                                                        data-toggle="modal"
+                                                        data-target="#delete_product_{{ $cart->id }}"><i
+                                                            class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;
+                                                        Remove
+                                                    </a>
+                                                    </button>
+                                                </div>
                                         </td>
                                     </tr>
                                 @endforeach
