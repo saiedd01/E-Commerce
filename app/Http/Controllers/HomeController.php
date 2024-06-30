@@ -46,6 +46,22 @@ class HomeController extends Controller
         return view("user.all", compact("products", "countCart", "countWishlist"));
     }
 
+    // Your controller file
+
+    public function allProducts()
+    {
+        // Get all products without pagination
+        $products = Product::all();
+
+        // Call function Count
+        $countCart = User::getCartCount();
+        $countWishlist = User::getWishlistCount();
+
+        // Return view with products and cart count
+        return view("user.all_products", compact("products", "countCart", "countWishlist"));
+    }
+
+
     public function show($id)
     {
         // Find product by ID

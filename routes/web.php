@@ -126,6 +126,7 @@ Route::controller(HomeController::class)->group(function () {
 
     // all
     Route::get("user/product", "all");
+    Route::get("user/all_product", "allProducts")->name("allProducts");
 
     // show one
     Route::get("user/product/show/{id}", "show")->name("Show");

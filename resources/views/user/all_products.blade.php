@@ -4,7 +4,6 @@
     <title> {{ __('message.All Products') }} </title>
 @endsection
 
-
 @section('latest')
     <div class="latest-products">
         <div class="container">
@@ -12,7 +11,7 @@
                 <div class="col-md-12">
                     <div class="section-heading">
                         <h2>{{ __('message.Latest Products') }}</h2>
-                        <a href="{{route("allProducts")}}">{{ __('message.View all products') }} <i class="fa fa-angle-right"></i></a>
+                        <a href="#">{{ __('message.View all products') }} <i class="fa fa-angle-right"></i></a>
                     </div>
                     {{-- Error Msg --}}
                     @if (session('error'))
@@ -39,12 +38,12 @@
                                 Recommended
                             </button>
                             <div class="dropdown-menu" aria-labelledby="sortDropdown">
-                                <button class="dropdown-item {{ request('sort') == 'price_asc' ? 'active' : '' }}"
-                                    type="submit" name="sort" value="price_asc">Price: LOW TO HIGH</button>
-                                <button class="dropdown-item {{ request('sort') == 'price_desc' ? 'active' : '' }}"
-                                    type="submit" name="sort" value="price_desc">Price: HIGH TO LOW</button>
-                                <button class="dropdown-item {{ request('sort') == 'avg_review_desc' ? 'active' : '' }}"
-                                    type="submit" name="sort" value="avg_review_desc">Avg. Review</button>
+                                <button class="dropdown-item" type="submit" name="sort" value="price_asc">Price: LOW TO
+                                    HIGH</button>
+                                <button class="dropdown-item" type="submit" name="sort" value="price_desc">Price: HIGH
+                                    TO LOW</button>
+                                <button class="dropdown-item" type="submit" name="sort" value="avg_review_desc">Avg.
+                                    Review</button>
                             </div>
                         </div>
                     </form>
@@ -69,11 +68,11 @@
                                 <a href="{{ route('Show', ['id' => $product->id]) }}">
                                     <h4>{{ $product->name }}</h4>
                                 </a>
-                                <p>{{Str::limit($product->desc,48,"...")}}</p>
+                                <p>{{ Str::limit($product->desc, 100) }}</p>
                                 <div class="price-container d-flex align-items-center" style="margin-top: -5px;">
                                     @if ($product->Discount != 0.0)
                                         <div style="display: flex; align-items: baseline;">
-                                            <h5 style="color: rgb(49, 52, 49); margin: 0;">
+                                            <h5 style="color: green; margin: 0;">
                                                 $@php
                                                     $priceAfterDiscount = $product->price - $product->Discount;
                                                     echo $priceAfterDiscount;
@@ -81,16 +80,16 @@
                                             </h5>
                                         </div>
                                         <div style="margin-left: 10px;">
-                                            <h5 style="text-decoration: line-through; color:gray; margin: 0;">
+                                            <h5 style="text-decoration: line-through; color: red; margin: 0;">
                                                 ${{ $product->price }}
                                             </h5>
                                         </div>
-                                        <h5 style="font-size: 14px; color: lightgreen; margin-left: 5px;">
+                                        <h5 style="font-size: 14px; color: grey; margin-left: 5px;">
                                             ({{ round(($product->Discount / $product->price) * 100) }}% off)
                                         </h5>
                                     @else
                                         <div>
-                                            <h5 style="color: rgb(46, 46, 46); margin: 0;">
+                                            <h5 style="color: green; margin: 0;">
                                                 ${{ $product->price }}
                                             </h5>
                                         </div>
@@ -120,10 +119,7 @@
                         </div>
                     </div>
                 @endforeach
-
-
             </div>
         </div>
     </div>
-    {{ $products->appends(['sort' => request('sort')])->links() }}
 @endsection
